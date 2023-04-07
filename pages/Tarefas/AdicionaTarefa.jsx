@@ -20,13 +20,15 @@ export default function AdicionaTarefa() {
     const adicionarTarefa = (e) => {
         e.preventDefault();
 
+        const dataTarefa = data.toLocaleDateString('pt-BR');
+        const horaTarefa = hora.toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit', hour12: false});
         const novaTarefa = new Tarefa(
             1,
             XP,
             titulo,
             descricao,
-            data.toLocaleDateString(),
-            hora.toLocaleTimeString(),
+            dataTarefa,
+            horaTarefa,
             'Ativo',
             []
         );
@@ -45,8 +47,8 @@ export default function AdicionaTarefa() {
       setData(currentDate);
     };
 
-    const changeHora = (event, selectedDate) => {
-      const currentDate = selectedDate;
+    const changeHora = (event, selectedHora) => {
+      const currentDate = selectedHora;
       setShowHora(false);
       setHora(currentDate);
     };

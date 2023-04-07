@@ -1,9 +1,9 @@
 import * as SQLite from 'expo-sqlite';
 const db = SQLite.openDatabase('agenda.db');
 
-export const addTarefa = (tarefa) => {
+export const addAtributo = (atributo) => {
     db.transaction(tx => {
-            tx.executeSql('INSERT INTO Tarefas(xp, titulo, descricao, data, hora, status) VALUES (?, ?, ?, ?, ?, ?)', [tarefa.xp, tarefa.titulo, tarefa.descricao, tarefa.data, tarefa.hora, tarefa.status],
+            tx.executeSql('INSERT INTO Atributos(nome, nivel, xp) VALUES (?, ?, ?)', [atributo.nome, atributo.nivel, atributo.xp],
         (txObj, resultSet) => {
           console.log(resultSet);
         },
@@ -13,27 +13,27 @@ export const addTarefa = (tarefa) => {
     console.log('add feito');
   }
 
-  export const getTarefas = (callback) => {
+  export const getAtributos = (callback) => {
     db.transaction(tx => {
-      tx.executeSql('SELECT * FROM Tarefas', null,
+      tx.executeSql('SELECT * FROM Atributos', null,
         (txObj, resultSet) => callback(resultSet.rows._array),
         (txObj, error) => console.log(error)
       );
     });
   };
   
-  export const getTarefa = (id, callback) => {
+  export const getAtributo = (id, callback) => {
     db.transaction(tx => {
-      tx.executeSql('SELECT * FROM Tarefas WHERE id=?', [id],
+      tx.executeSql('SELECT * FROM Atributos WHERE id=?', [id],
         (txObj, resultSet) => callback(resultSet.rows._array),
         (txObj, error) => console.log(error)
       );
     });
   };
   
-  export const putTarefa = (tarefa) => {
+  export const putAtributo = (atributo) => {
     db.transaction(tx => {
-      tx.executeSql('UPDATE Tarefas SET xp=?, titulo=?, descricao=?, data=?, hora=?, status=? WHERE id=?', [tarefa.xp, tarefa.titulo, tarefa.descricao, tarefa.data, tarefa.hora, tarefa.status],
+      tx.executeSql('UPDATE Atributos SET nome=?, nivel=?, xp=? WHERE id=?', [atributo.nome, atributo.nivel, atributo.xp],
         (txObj, resultSet) => {
           console.log(resultSet)
         },
@@ -42,9 +42,9 @@ export const addTarefa = (tarefa) => {
     });
   };
   
-  export const delTarefa = (id) => {
+  export const delAtributo = (id) => {
     db.transaction(tx => {
-      tx.executeSql('DELETE FROM Tarefas WHERE id=?', [id],
+      tx.executeSql('DELETE FROM Atributos WHERE id=?', [id],
         (txObj, resultSet) => {
           console.log(resultSet)
         },
