@@ -14,7 +14,7 @@ export default function ViewTarefa({navigation, route}) {
     const handleTarefa = () => {
         getTarefa(route.params.id, (tarefa) => {
           setTarefa(tarefa);
-          // console.log(tarefa);
+          console.log(tarefa);
           setLoading(false);
         });
       }
@@ -30,7 +30,7 @@ export default function ViewTarefa({navigation, route}) {
     :(
       <View>
         <Text>{tarefa[0].titulo}</Text>
-        <Text>{tarefa[0].descricao}</Text>
+        <Text>{tarefa[0].nome_atributo}</Text>
       </View>
     )
   )
