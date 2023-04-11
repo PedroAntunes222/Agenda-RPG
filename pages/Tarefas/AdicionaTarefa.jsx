@@ -14,6 +14,7 @@ import ModalSelector from "react-native-modal-selector";
 import { TextInput, FAB } from "react-native-paper";
 import { addTarefa } from "../../Database/tarefasDatabase";
 import { getAtributos } from "../../Database/atributosDatabase";
+// import { getTarefasAtributos } from "../../Database/tarefasDatabase";
 import Tarefa from "../../class/tarefa";
 
 export default function AdicionaTarefa() {
@@ -30,18 +31,18 @@ export default function AdicionaTarefa() {
   const [descricao, setDescricao] = useState("");
   const [data, setData] = useState(new Date());
   const [hora, setHora] = useState(new Date());
-  const [atributosUsados, setAtributosUsados] = useState(new Date());
+  const [atributosUsados, setAtributosUsados] = useState();
 
   useEffect(()=>{
     getAtributos(setAtributos);
-    // setAtributos(todosAtributos);
-    console.log(atributos)
+    // getTarefasAtributos(setAtributos)
+    // console.log(atributos);
   }, [db]);
 
   useEffect(()=>{
-    console.log(atributos)
+    // console.log(atributos);
     if(atributos){
-      let montaAtributos = atributos.map((atributo, index)=>({key:index, label: atributo.nome}));
+      let montaAtributos = atributos.map((atributo, index)=>({key:atributo.id, label: atributo.nome}));
       setAtributosDisponiveis(montaAtributos);
     }
   }, [atributos]);

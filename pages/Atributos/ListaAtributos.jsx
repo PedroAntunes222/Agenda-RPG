@@ -22,7 +22,6 @@ export default function ListaAtributos({ navigation }) {
 
   useEffect(() => {
     getAtributos(handleAtributos);
-    console.log(atributos);
   }, [db]);
 
   useEffect(() => {
@@ -34,7 +33,7 @@ export default function ListaAtributos({ navigation }) {
 
   useEffect(() => {
     setLoading(false);
-    // console.log(tarefas);
+    // console.log(atributos);
   }, [atributos]);
 
   return loading ? (

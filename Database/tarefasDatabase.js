@@ -15,7 +15,7 @@ export const addTarefa = (tarefa, idAtributo) => {
       ],(_, { insertId }) => {
         const idTarefa = insertId;
         tx.executeSql(
-          `INSERT INTO Tarefas_Atributos (id_Tarefa, id_Atributo)
+          `INSERT INTO Tarefas_Atributos(id_Tarefa, id_Atributo)
            VALUES (?, ?)`,
           [idTarefa, idAtributo],
           () => {
@@ -47,11 +47,24 @@ export const getTarefas = (callback) => {
   });
 };
 
+export const getTarefasAtributos = (callback) => {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "SELECT * FROM Tarefas_Atributos",
+      null,
+      (txObj, resultSet) => callback(resultSet.rows._array),
+      (txObj, error) => console.log(error)
+    );
+  });
+};
+
 export const getTarefa = (id, callback) => {
   db.transaction((tx) => {
     tx.executeSql(
-      "SELECT Tarefas.*, Atributos.nome AS nome_atributo FROM Tarefas LEFT JOIN Tarefas_Atributos ON Tarefas.id = Tarefas_Atributos.id_Tarefa LEFT JOIN Atributos ON Tarefas_Atributos.id_Atributo = Atributos.id WHERE Tarefas.id=?",
-      [id],
+     `SELECT Tarefas.*, Atributos.nome AS nome_atributo FROM Tarefas 
+      LEFT JOIN Tarefas_Atributos ON Tarefas.id = Tarefas_Atributos.id_Tarefa 
+      LEFT JOIN Atributos ON Tarefas_Atributos.id_Atributo = Atributos.id 
+      WHERE Tarefas.id=?`,[id],
       (txObj, resultSet) => callback(resultSet.rows._array),
       (txObj, error) => console.log(error)
     );
