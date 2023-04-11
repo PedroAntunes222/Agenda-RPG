@@ -33,43 +33,47 @@ export default function ListaTarefas({navigation}) {
 
   return (
     loading ? (<Text>Loading</Text>) : (
-      <View style={style.lista}>
+      <SafeAreaView>
+        <ScrollView>
+          <View style={style.lista}>
 
-          <TouchableOpacity
-            style={style.card}
-            onPress={(e)=>navigation.navigate('Add')}
-          >
-            <Text style={style.cardTitle}> Adicionar Tarefa </Text>
-          </TouchableOpacity>
+              <TouchableOpacity
+                style={style.card}
+                onPress={(e)=>navigation.navigate('AddTarefa')}
+              >
+                <Text style={style.cardTitle}> Adicionar Tarefa </Text>
+              </TouchableOpacity>
 
-          {tarefas.map((tarefa, index) => (
-            <TouchableOpacity 
-            style={style.card}
-              key={index}
-              onPress={(e)=>navigation.navigate({
-                name:'View',
-                params: {
-                  title: tarefa.titulo,
-                  id: tarefa.id
-                }
-                })} 
-            >
-              <View style={style.cardInfos}>
-                <View style={style.cardInfo}>
-                  <Text style={style.cardText}>{tarefa.hora}</Text>
-                </View>
-                <View style={style.cardInfo}>
-                  <Text style={style.cardTitle}>{tarefa.titulo}</Text>
-                </View>
-              </View>
+              {tarefas.map((tarefa, index) => (
+                <TouchableOpacity 
+                style={style.card}
+                  key={index}
+                  onPress={(e)=>navigation.navigate({
+                    name:'ViewTarefa',
+                    params: {
+                      title: tarefa.titulo,
+                      id: tarefa.id
+                    }
+                    })} 
+                >
+                  <View style={style.cardInfos}>
+                    <View style={style.cardInfo}>
+                      <Text style={style.cardText}>{tarefa.hora}</Text>
+                    </View>
+                    <View style={style.cardInfo}>
+                      <Text style={style.cardTitle}>{tarefa.titulo}</Text>
+                    </View>
+                  </View>
 
-              <View style={style.cardData}>
-                <Text style={style.cardText}>{tarefa.data}</Text>
-              </View>
-            </TouchableOpacity>
-          ))}
+                  <View style={style.cardData}>
+                    <Text style={style.cardText}>{tarefa.data}</Text>
+                  </View>
+                </TouchableOpacity>
+              ))}
 
-      </View>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
     ) 
   )
 }

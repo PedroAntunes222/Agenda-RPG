@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Text , View, StyleSheet, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
 import * as SQLite from 'expo-sqlite';
-import { initDB } from '../../Database/sqsliteDatabase';
 import { getTarefa } from '../../Database/tarefasDatabase';
 import Tarefa from '../../class/tarefa';
 
@@ -13,15 +12,14 @@ export default function ViewTarefa({navigation, route}) {
     const [tarefa, setTarefa] = useState();
 
     const handleTarefa = () => {
-        getTarefa(route.params.id, (livro) => {
-          setTarefa(livro);
-          console.log(livro);
+        getTarefa(route.params.id, (tarefa) => {
+          setTarefa(tarefa);
+          // console.log(tarefa);
           setLoading(false);
         });
       }
   
     useEffect(() => {
-      initDB();
       handleTarefa();
     }, [db]);
 
@@ -30,10 +28,10 @@ export default function ViewTarefa({navigation, route}) {
       <Text>Loading</Text>
     )
     :(
-      <>
+      <View>
         <Text>{tarefa[0].titulo}</Text>
         <Text>{tarefa[0].descricao}</Text>
-      </>
+      </View>
     )
   )
 }
