@@ -46,7 +46,7 @@ export default function ViewTarefa({navigation, route}) {
 
           <View style={style.infoBloco}>
             <Text style={style.text}>Atributo</Text>
-            <Text style={style.text}>{tarefa[0].nome_atributo}</Text>
+            <View style={[style.atributo, {backgroundColor: tarefa[0].atributo_cor}]}></View>
           </View>
           
         </View>
@@ -62,14 +62,20 @@ const style = StyleSheet.create({
     marginHorizontal: 'auto',
     flexDirection: 'column',
     gap: 10,
-    padding: 30,
+    padding: 20,
   },
   infoBloco: {
     borderBottomColor: 'gray',
     borderBottomWidth: 1,
     paddingBottom: 12,
+    paddingHorizontal: 10,
     flexDirection: 'row',
     justifyContent: 'space-between'
+  },
+  atributo: {
+    width: 25,
+    height: 25,
+    borderRadius: 100,
   },
   text: {
     color: 'white',

@@ -13,6 +13,7 @@ export default function ListaTarefas({navigation}) {
 
   const handleTarefas = (tarefas) => {
     setTarefas(tarefas);
+    console.log(tarefas)
   }
 
   useEffect(() => {
@@ -38,10 +39,10 @@ export default function ListaTarefas({navigation}) {
           <View style={style.lista}>
 
               <TouchableOpacity
-                style={style.card}
+                style={[style.card, {alignItems: "center", justifyContent: "center",}]}
                 onPress={(e)=>navigation.navigate('AddTarefa')}
               >
-                <Text style={style.cardTitle}> Adicionar Tarefa </Text>
+                <Text style={{color: 'white', fontSize: 20}}> Adicionar Tarefa </Text>
               </TouchableOpacity>
 
               {tarefas.map((tarefa, index) => (
@@ -58,15 +59,16 @@ export default function ListaTarefas({navigation}) {
                 >
                   <View style={style.cardInfos}>
                     <View style={style.cardInfo}>
-                      <Text style={style.cardText}>{tarefa.hora}</Text>
+                      <Text style={{color: 'white', fontSize: 18}}>{tarefa.hora}</Text>
+                      <View style={[style.cardAtributo, {backgroundColor: tarefa.atributo_cor}]}></View>
                     </View>
-                    <View style={style.cardInfo}>
-                      <Text style={style.cardTitle}>{tarefa.titulo}</Text>
+                    <View>
+                      <Text style={{color: 'white', fontSize: 24}}>{tarefa.titulo}</Text>
                     </View>
                   </View>
 
                   <View style={style.cardData}>
-                    <Text style={style.cardText}>{tarefa.data}</Text>
+                    <Text style={{color: 'white', fontSize: 14}}>{tarefa.data}</Text>
                   </View>
                 </TouchableOpacity>
               ))}
@@ -91,24 +93,25 @@ const style = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#323232',
     justifyContent: 'space-between',
-    alignItems: "center",
-    justifyContent: "center",
   },
   cardInfos: {
     flexDirection: 'column',
     justifyContent: 'space-between',
+  },
+  cardInfo: {
+    flexDirection: 'row',
+    gap: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  cardAtributo: {
+    width: 20,
+    height: 20,
+    borderRadius: 100,
   },
   cardData: {
     backgroundColor: '#1e1e1e',
     borderRadius: 10,
     padding: 5,
   },
-  cardTitle: {
-    color: 'white',
-    fontSize: 20,
-  },
-  cardText: {
-    color: 'white',
-    fontSize: 14,
-  }
 });

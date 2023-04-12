@@ -39,7 +39,9 @@ export const addTarefa = (tarefa, idAtributo) => {
 export const getTarefas = (callback) => {
   db.transaction((tx) => {
     tx.executeSql(
-      "SELECT * FROM Tarefas",
+      `SELECT Tarefas.*, Atributos.nome AS atributo_nome, Atributos.cor AS atributo_cor FROM Tarefas 
+      LEFT JOIN Tarefas_Atributos ON Tarefas.id = Tarefas_Atributos.id_Tarefa 
+      LEFT JOIN Atributos ON Tarefas_Atributos.id_Atributo = Atributos.id`,
       null,
       (txObj, resultSet) => callback(resultSet.rows._array),
       (txObj, error) => console.log(error)
@@ -61,7 +63,7 @@ export const getTarefasAtributos = (callback) => {
 export const getTarefa = (id, callback) => {
   db.transaction((tx) => {
     tx.executeSql(
-     `SELECT Tarefas.*, Atributos.nome AS nome_atributo FROM Tarefas 
+     `SELECT Tarefas.*, Atributos.nome AS atributo_nome, Atributos.cor AS atributo_cor FROM Tarefas 
       LEFT JOIN Tarefas_Atributos ON Tarefas.id = Tarefas_Atributos.id_Tarefa 
       LEFT JOIN Atributos ON Tarefas_Atributos.id_Atributo = Atributos.id 
       WHERE Tarefas.id=?`,[id],
