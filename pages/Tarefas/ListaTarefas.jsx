@@ -91,6 +91,8 @@ const style = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#323232',
     justifyContent: 'space-between',
+    alignItems: "center",
+    justifyContent: "center",
   },
   cardInfos: {
     flexDirection: 'column',

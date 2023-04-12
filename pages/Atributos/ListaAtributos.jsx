@@ -36,6 +36,22 @@ export default function ListaAtributos({ navigation }) {
     // console.log(atributos);
   }, [atributos]);
 
+  const ProgressCounter = ({color, progress}) => {
+    // let rgb = `#${color}`;
+    let calc = progress * 10;
+    return (
+      <View
+        style={[
+          style.progressXP,
+          {
+            backgroundColor: color,
+            width: `${calc}%`,
+          },
+        ]}
+      />
+    )
+  };
+
   return loading ? (
     <Text>Loading</Text>
   ) : (
@@ -51,7 +67,6 @@ export default function ListaAtributos({ navigation }) {
 
           {atributos.map((atributo, index) => (
             <TouchableOpacity
-              style={style.card}
               key={index}
               onPress={(e) =>
                 navigation.navigate({
@@ -64,12 +79,22 @@ export default function ListaAtributos({ navigation }) {
               }
             >
               <View style={style.cardInfos}>
-                <View style={style.cardInfo}>
-                  <Text style={style.cardText}>{atributo.nivel}</Text>
-                  <Text style={style.cardText}>{atributo.xp}</Text>
+                <View style={style.cardHeader}>
+                  <View style={style.cardAtributo}>
+                    <Text style={{color: 'white', fontSize: 20}}>{atributo.nome}</Text>
+                  </View>
+
+                  <View style={style.cardNivel}>
+                    <Text style={{color: 'white', fontSize: 26}}>{atributo.nivel}</Text>
+                  </View>
                 </View>
-                <View style={style.cardInfo}>
-                  <Text style={style.cardTitle}>{atributo.nome}</Text>
+
+                <View style={style.cardXP}>
+                  <ProgressCounter
+                    color='green'
+                    progress={atributo.xp}
+                  />
+                  <Text style={{color: 'white', fontSize: 28}}>{atributo.xp} / 10</Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -87,21 +112,55 @@ const style = StyleSheet.create({
     padding: 15,
   },
   card: {
-    height: 100,
+    height: 120,
     padding: 10,
     borderRadius: 10,
-    flexDirection: "row",
-    backgroundColor: "#323232",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    backgroundColor: '#323232',
+    justifyContent: 'space-between',
+    alignItems: "center",
+    justifyContent: "center",
   },
   cardInfos: {
     flexDirection: "column",
     justifyContent: "space-between",
+    flexDirection: "column",
+    gap: 8,
   },
-  cardData: {
-    backgroundColor: "#1e1e1e",
+  cardHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    gap: 5,
+  },
+  cardAtributo: {
+    backgroundColor: "#323232",
     borderRadius: 10,
-    padding: 5,
+    width: "80%",
+    padding: 10,
+  },
+  cardNivel: {
+    backgroundColor: "#323232",
+    borderRadius: 10,
+    width: "18%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  cardXP: {
+    backgroundColor: "#323232",
+    borderRadius: 10,
+    height: 80,
+    alignItems: "center",
+    justifyContent: "center",
+    position: "relative",
+  },
+  progressXP: {
+    position: "absolute",
+    // backgroundColor: 'green',
+    // width: '60%',
+    borderRadius: 10,
+    left: 0,
+    top: 0,
+    bottom: 0,
   },
   cardTitle: {
     color: "white",
