@@ -139,7 +139,7 @@ export default function AdicionaTarefa() {
               label="Data"
               mode="outlined"
               disabled
-              value={data.toLocaleDateString() || ""}
+              value={data.toLocaleDateString("pt-BR") || ""}
               disabledTextColor="white"
               textColor="#fff"
               outlineColor="#fff"
@@ -153,6 +153,7 @@ export default function AdicionaTarefa() {
               testID="dateTimePicker"
               value={data}
               mode="date"
+              locale="pt-BR"
               onChange={changeData}
             />
           )}
