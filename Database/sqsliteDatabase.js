@@ -5,14 +5,15 @@ const db = SQLite.openDatabase('agenda.db');
 export const initDB = () => {
   db.transaction((tx) => {
     tx.executeSql(
-      `CREATE TABLE IF NOT EXISTS Tarefas( 
-        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
-        xp INTEGER, 
-        titulo TEXT, 
-        descricao TEXT, 
-        data TEXT, 
-        hora TEXT, 
-        status TEXT 
+      `CREATE TABLE IF NOT EXISTS Tarefas(
+        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+        xp INTEGER,
+        titulo TEXT,
+        descricao TEXT,
+        repeticao TEXT,
+        data TEXT,
+        hora TEXT,
+        status TEXT
       )`
     );
     tx.executeSql(

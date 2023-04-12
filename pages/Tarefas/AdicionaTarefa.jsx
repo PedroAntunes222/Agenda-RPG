@@ -29,6 +29,7 @@ export default function AdicionaTarefa() {
   const [XP, setXP] = useState("");
   const [titulo, setTitulo] = useState("");
   const [descricao, setDescricao] = useState("");
+  const [repeticao, setRepeticao] = useState("");
   const [data, setData] = useState(new Date());
   const [hora, setHora] = useState(new Date());
   const [atributosUsados, setAtributosUsados] = useState();
@@ -61,6 +62,7 @@ export default function AdicionaTarefa() {
       XP,
       titulo,
       descricao,
+      repeticao,
       dataTarefa,
       horaTarefa,
       "Ativo",

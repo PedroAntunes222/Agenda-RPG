@@ -1,11 +1,12 @@
 import Atributo from "./atributo";
 
 class Tarefa{
-    constructor(id, xp, titulo, descricao, data, hora, status, atributos){
+    constructor(id, xp, titulo, descricao, repeticao, data, hora, status, atributos){
         this.id = id;
         this.xp = xp;
         this.titulo = titulo;
         this.descricao = descricao;
+        this.repeticao = repeticao;
         this.data = data;
         this.hora = hora;
         this.status = status;

@@ -4,11 +4,12 @@ const db = SQLite.openDatabase("agenda.db");
 export const addTarefa = (tarefa, idAtributo) => {
   db.transaction((tx) => {
     tx.executeSql(
-      "INSERT INTO Tarefas(xp, titulo, descricao, data, hora, status) VALUES (?, ?, ?, ?, ?, ?)",
+      "INSERT INTO Tarefas(xp, titulo, repeticao, descricao, data, hora, status) VALUES (?, ?, ?, ?, ?, ?, ?)",
       [
         tarefa.xp,
         tarefa.titulo,
         tarefa.descricao,
+        tarefa.repeticao,
         tarefa.data,
         tarefa.hora,
         tarefa.status,
@@ -76,14 +77,16 @@ export const getTarefa = (id, callback) => {
 export const putTarefa = (tarefa) => {
   db.transaction((tx) => {
     tx.executeSql(
-      "UPDATE Tarefas SET xp=?, titulo=?, descricao=?, data=?, hora=?, status=? WHERE id=?",
+      "UPDATE Tarefas SET xp=?, titulo=?, descricao=?, repeticao=?, data=?, hora=?, status=? WHERE id=?",
       [
         tarefa.xp,
         tarefa.titulo,
         tarefa.descricao,
+        tarefa.repeticao,
         tarefa.data,
         tarefa.hora,
         tarefa.status,
+        tarefa.id
       ],
       (txObj, resultSet) => {
         console.log(resultSet);
