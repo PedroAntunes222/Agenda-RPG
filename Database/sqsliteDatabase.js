@@ -19,6 +19,7 @@ export const initDB = () => {
       `CREATE TABLE IF NOT EXISTS Atributos( 
         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
         nome TEXT, 
+        cor TEXT,
         nivel INTEGER, 
         xp INTEGER
       )`

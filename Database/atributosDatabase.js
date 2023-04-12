@@ -3,7 +3,7 @@ const db = SQLite.openDatabase('agenda.db');
 
 export const addAtributo = (atributo) => {
     db.transaction(tx => {
-            tx.executeSql('INSERT INTO Atributos(nome, nivel, xp) VALUES (?, ?, ?)', [atributo.nome, atributo.nivel, atributo.xp],
+            tx.executeSql('INSERT INTO Atributos(nome, cor, nivel, xp) VALUES (?, ?, ?, ?)', [atributo.nome, atributo.cor, atributo.nivel, atributo.xp],
         (txObj, resultSet) => {
           console.log(resultSet);
         },
@@ -33,7 +33,7 @@ export const addAtributo = (atributo) => {
   
   export const putAtributo = (atributo) => {
     db.transaction(tx => {
-      tx.executeSql('UPDATE Atributos SET nome=?, nivel=?, xp=? WHERE id=?', [atributo.nome, atributo.nivel, atributo.xp],
+      tx.executeSql('UPDATE Atributos SET nome=?, cor=?, nivel=?, xp=? WHERE id=?', [atributo.nome, atributo.cor, atributo.nivel, atributo.xp],
         (txObj, resultSet) => {
           console.log(resultSet)
         },

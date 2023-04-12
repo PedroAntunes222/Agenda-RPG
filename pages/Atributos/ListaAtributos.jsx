@@ -37,7 +37,6 @@ export default function ListaAtributos({ navigation }) {
   }, [atributos]);
 
   const ProgressCounter = ({color, progress}) => {
-    // let rgb = `#${color}`;
     let calc = progress * 10;
     return (
       <View
@@ -91,7 +90,7 @@ export default function ListaAtributos({ navigation }) {
 
                 <View style={style.cardXP}>
                   <ProgressCounter
-                    color='green'
+                    color={atributo.cor}
                     progress={atributo.xp}
                   />
                   <Text style={{color: 'white', fontSize: 28}}>{atributo.xp} / 10</Text>

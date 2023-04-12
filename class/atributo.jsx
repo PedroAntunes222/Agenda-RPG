@@ -1,6 +1,7 @@
 class Atributo{
-    constructor(id, nome, nivel, xp){
+    constructor(id, cor, nome, nivel, xp){
         this.id = id;
+        this.cor = cor;
         this.nome = nome;
         this.nivel = nivel;
         this.xp = xp;

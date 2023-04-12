@@ -2,19 +2,27 @@ import React, { useState } from 'react';
 import { Text , View, StyleSheet, SafeAreaView, ScrollView, Button, TouchableOpacity } from 'react-native';
 import { TextInput, FAB } from 'react-native-paper';
 import { addAtributo } from '../../Database/atributosDatabase';
+import ColorPicker from 'react-native-wheel-color-picker'
 import Atributo from '../../class/atributo';
 
 export default function AdicionaAtributo() {
 
   const [nome, setNome] = useState('');
+  const [cor, setCor] = useState('');
   const [nivel, setNivel] = useState('');
   const [XP, setXP] = useState('');
+
+  const onColorChange = (color) => {
+    setCor(color);
+    console.log(color)
+  }
 
   const adicionarAtributo = (e) => {
     e.preventDefault();
 
     const novoAtributo = new Atributo(
         1,
+        cor,
         nome,
         nivel,
         XP
@@ -67,6 +75,13 @@ export default function AdicionaAtributo() {
                     style={{ marginHorizontal: 10, backgroundColor:"#323232" }}
                     theme={{ colors: { onSurfaceVariant: '#fff'} }}
                 />
+                <View style={[]}>
+                  <ColorPicker
+                    color={cor}
+                    onColorChangeComplete={onColorChange}
+                    swatches={false}
+                  />
+                </View>
                 <FAB 
                   style={{backgroundColor:'green'}} 
                   onPress={(e) => {adicionarAtributo(e)}} 
