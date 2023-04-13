@@ -1,55 +1,20 @@
 import React, { useState } from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  SafeAreaView,
-  ScrollView,
-  Button,
-  TouchableOpacity,
-} from "react-native";
-import { useNavigation, StackActions } from "@react-navigation/native";
+import {NavigationContainer} from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+import TarefasRotas from "../Tarefas/TarefasRotas";
+import AtributosRotas from "../Atributos/AtributosRotas";
+import Personagem from "../Personagem/Personagem";
 
 export default function BottomMenu() {
-  const navigation = useNavigation();
+  const Tab = createBottomTabNavigator();
 
   return (
-    <View style={style.menuList}>
-      <TouchableOpacity
-        onPress={(e) =>
-          navigation.reset({
-            index: 0,
-            routes: [{ name: "ListaTarefas" }],
-          })
-        }
-      >
-        <Text style={style.menuItem}> Quests </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={(e) =>
-          navigation.reset({
-            index: 0,
-            routes: [{ name: "ListaAtributos" }],
-          })
-        }
-      >
-        <Text style={style.menuItem}> Personagem </Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={(e) => navigation.navigate("ListaAtributos")}>
-        <Text style={style.menuItem}> Inventário </Text>
-      </TouchableOpacity>
-    </View>
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen name="Quests" component={TarefasRotas} />
+        <Tab.Screen name="Personagem" component={Personagem} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }
-
-const style = StyleSheet.create({
-  menuList: {
-    backgroundColor: "#1E1E1E",
-    flexDirection: "row",
-    justifyContent: "space-around",
-  },
-  menuItem: {
-    color: "white",
-    paddingVertical: 15,
-  },
-});

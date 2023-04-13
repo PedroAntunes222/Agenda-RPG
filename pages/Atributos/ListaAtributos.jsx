@@ -7,6 +7,7 @@ import {
   ScrollView,
   Button,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import * as SQLite from "expo-sqlite";
 import { getAtributos, delAtributo } from "../../Database/atributosDatabase";
@@ -51,10 +52,12 @@ export default function ListaAtributos({ navigation }) {
     )
   };
 
+  const windowHeight = Dimensions.get('window').height;
+
   return loading ? (
     <Text>Loading</Text>
   ) : (
-    <SafeAreaView>
+    <SafeAreaView style={{backgroundColor:'#1E1E1E', height:windowHeight}}>
       <ScrollView>
         <View style={style.lista}>
           <TouchableOpacity

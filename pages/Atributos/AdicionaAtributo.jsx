@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text , View, StyleSheet, SafeAreaView, ScrollView, Button, TouchableOpacity } from 'react-native';
+import { Text , View, StyleSheet, SafeAreaView, ScrollView, Button, TouchableOpacity, Dimensions } from 'react-native';
 import { TextInput, FAB } from 'react-native-paper';
 import { addAtributo } from '../../Database/atributosDatabase';
 import ColorPicker from 'react-native-wheel-color-picker'
@@ -91,3 +91,70 @@ export default function AdicionaAtributo() {
     </SafeAreaView>
   )
 }
+
+const style = StyleSheet.create({
+  lista: {
+    flexDirection: "column",
+    gap: 10,
+    padding: 15,
+  },
+  card: {
+    height: 120,
+    padding: 10,
+    borderRadius: 10,
+    flexDirection: 'row',
+    backgroundColor: '#323232',
+    justifyContent: 'space-between',
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  cardInfos: {
+    flexDirection: "column",
+    justifyContent: "space-between",
+    flexDirection: "column",
+    gap: 8,
+  },
+  cardHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    gap: 5,
+  },
+  cardAtributo: {
+    backgroundColor: "#323232",
+    borderRadius: 10,
+    width: "80%",
+    padding: 10,
+  },
+  cardNivel: {
+    backgroundColor: "#323232",
+    borderRadius: 10,
+    width: "18%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  cardXP: {
+    backgroundColor: "#323232",
+    borderRadius: 10,
+    height: 80,
+    alignItems: "center",
+    justifyContent: "center",
+    position: "relative",
+  },
+  progressXP: {
+    position: "absolute",
+    // backgroundColor: 'green',
+    // width: '60%',
+    borderRadius: 10,
+    left: 0,
+    top: 0,
+    bottom: 0,
+  },
+  cardTitle: {
+    color: "white",
+    fontSize: 20,
+  },
+  cardText: {
+    color: "white",
+    fontSize: 14,
+  },
+});

@@ -1,9 +1,7 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import Rotas from './pages/Rotas';
+import BottomMenu from './pages/components/BottomMenu';
 
 export default function App() {
   return (
-      <Rotas />
+      <BottomMenu />
   );
 }

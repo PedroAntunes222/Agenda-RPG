@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   ScrollView,
+  Dimensions,
 } from "react-native";
 import * as SQLite from "expo-sqlite";
 import { initDB } from "../../Database/sqsliteDatabase";
@@ -57,10 +58,12 @@ export default function ListaTarefas({ navigation }) {
     );
   };
 
+  const windowHeight = Dimensions.get('window').height;
+
   return loading ? (
     <Text>Loading</Text>
   ) : (
-    <SafeAreaView>
+    <SafeAreaView style={{backgroundColor:'#1E1E1E', height:windowHeight}}>
       <ScrollView>
         <View style={style.lista}>
           <TouchableOpacity
