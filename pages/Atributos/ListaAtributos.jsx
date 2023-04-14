@@ -74,7 +74,7 @@ export default function ListaAtributos({ navigation }) {
                 navigation.navigate({
                   name: "ViewAtributo",
                   params: {
-                    title: atributo.titulo,
+                    title: atributo.nome,
                     id: atributo.id,
                   },
                 })

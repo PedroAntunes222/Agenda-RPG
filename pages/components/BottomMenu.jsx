@@ -11,7 +11,22 @@ export default function BottomMenu() {
 
   return (
     <NavigationContainer>
-      <Tab.Navigator>
+      <Tab.Navigator
+      screenOptions={() => ({
+        headerTintColor: '#fff',
+        headerShadowVisible: false,
+        headerStyle: {
+          backgroundColor: '#1E1E1E',
+        },
+        tabBarStyle: {
+          backgroundColor: '#1E1E1E',
+          borderTopWidth: 0,
+        },
+        headerTitleStyle: {
+          fontSize: 30
+        }
+      })}
+      >
         <Tab.Screen name="Quests" component={TarefasRotas} />
         <Tab.Screen name="Personagem" component={Personagem} />
       </Tab.Navigator>

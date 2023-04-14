@@ -17,17 +17,18 @@ export default function AtributosRotas() {
                 contentStyle:{backgroundColor:'#1E1E1E'},
                 headerStyle: {backgroundColor: '#1E1E1E'},
                 headerTintColor: '#fff',
-                headerTitleStyle:{fontSize:30}
+                headerTitleStyle:{fontSize:20}
               }}
             >
 
               <Stack.Screen name="ListaAtributos" component={ListaAtributos} options={{ 
                   title: 'Lista de Atributos',
+                  headerShown: false
               }} />
 
               <Stack.Screen name="AddAtributo" component={AdicionaAtributo} options={{ 
                   title: 'Add',
-              }} />
+                }} />
 
               <Stack.Screen name="ViewAtributo" component={ViewAtributo} options={({ route }) => ({
                   title: route.params.title,

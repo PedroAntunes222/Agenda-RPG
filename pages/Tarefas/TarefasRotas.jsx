@@ -25,11 +25,12 @@ export default function TarefasRotas() {
 
               <Stack.Screen name="ListaTarefas" component={ListaTarefas} options={{ 
                   title: 'Quests',
-              }} />
+                  headerShown: false
+                }} />
 
               <Stack.Screen name="AddTarefa" component={AdicionaTarefa} options={{ 
                   title: 'Add',
-              }} />
+                }} />
               
               <Stack.Screen name="ViewTarefa" component={ViewTarefa} options={({ route }) => ({
                   title: route.params.title,
