@@ -1,7 +1,7 @@
 import React from "react";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import AtributosRotas from "../Atributos/AtributosRotas";
-import TarefasRotas from "../Tarefas/TarefasRotas";
+import InventarioRotas from "../Inventario/InventarioRotas";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -22,7 +22,7 @@ export default function Personagem() {
       />
       <Tab.Screen 
         name="Equipamento" 
-        component={AtributosRotas}
+        component={InventarioRotas}
         options={{
           headerShown: false
         }}

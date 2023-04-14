@@ -1,4 +1,3 @@
-// import SQLite from "react-native-sqlite-storage";
 import * as SQLite from 'expo-sqlite';
 const db = SQLite.openDatabase('agenda.db');
 
@@ -34,18 +33,33 @@ export const initDB = () => {
         FOREIGN KEY (id_Atributo) REFERENCES Atributos(id)
       )`
     );
+    tx.executeSql(
+      `CREATE TABLE IF NOT EXISTS Itens(
+        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+        nome TEXT,
+        descricao TEXT,
+        raridade TEXT,
+        tipo TEXT,
+        equipamento TEXT
+      )`
+    );
+    tx.executeSql(
+      `CREATE TABLE IF NOT EXISTS Inventario( 
+        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+        Item INTEGER,
+        quantidade INTEGER,
+        FOREIGN KEY (Item) REFERENCES Itens(id)
+      )`
+    );
+    tx.executeSql(
+      `CREATE TABLE IF NOT EXISTS Recompensa_Item( 
+        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+        id_Tarefa INTEGER,
+        id_Item INTEGER,
+        FOREIGN KEY (id_Tarefa) REFERENCES Tarefas(id)
+        FOREIGN KEY (id_Item) REFERENCES Itens(id)
+      )`
+    );
   });
   console.log('banco criado');
 };
-
-// export const addTarefa = (tarefa) => {
-//   db.transaction(tx => {
-//           tx.executeSql('INSERT INTO Tarefas(xp, titulo, descricao, data, hora, status) VALUES (?, ?, ?, ?, ?, ?)', [tarefa.xp, tarefa.titulo, tarefa.descricao, tarefa.data, tarefa.hora, tarefa.status],
-//       (txObj, resultSet) => {
-//         console.log(resultSet)
-//       },
-//       (txObj, error) => console.log(error)
-//     );
-//   })
-//   console.log('add feito');
-// }
