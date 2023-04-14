@@ -32,7 +32,7 @@ export default function AdicionaTarefa() {
   const [repeticao, setRepeticao] = useState("");
   const [data, setData] = useState(new Date());
   const [hora, setHora] = useState(new Date());
-  const [atributosUsados, setAtributosUsados] = useState();
+  const [atributoUsado, setatributoUsado] = useState();
 
   useEffect(()=>{
     getAtributos(setAtributos);
@@ -66,7 +66,7 @@ export default function AdicionaTarefa() {
       dataTarefa,
       horaTarefa,
       "Ativo",
-      []
+      atributoUsado
     );
 
     // let str;
@@ -74,7 +74,7 @@ export default function AdicionaTarefa() {
     // str = JSON.stringify(novaTarefa, null, 4);
     // console.log(str);
 
-    addTarefa(novaTarefa, atributosUsados);
+    addTarefa(novaTarefa);
   };
 
   const changeData = (event, selectedDate) => {
@@ -202,7 +202,7 @@ export default function AdicionaTarefa() {
               selectTextStyle={{ color: "white" }} // texto do input
               selectStyle={{ borderWidth: 1, borderColor: "white" }} // borda do input
               onChange={(option) => {
-                setAtributosUsados(option.key);
+                setatributoUsado(option.key);
               }}
             />
           </View>

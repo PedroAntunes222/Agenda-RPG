@@ -1,7 +1,7 @@
 import Atributo from "./atributo";
 
 class Tarefa{
-    constructor(id, xp, titulo, descricao, repeticao, data, hora, status, atributos){
+    constructor(id, xp, titulo, descricao, repeticao, data, hora, status, atributo){
         this.id = id;
         this.xp = xp;
         this.titulo = titulo;
@@ -10,7 +10,7 @@ class Tarefa{
         this.data = data;
         this.hora = hora;
         this.status = status;
-        this.atributos = atributos.map(item=>new Atributo(item.id, item.nome, item.nivel, item.xp));
+        this.atributo = atributo;
     }
 }
 export default Tarefa;

@@ -1,7 +1,7 @@
 import * as SQLite from "expo-sqlite";
 const db = SQLite.openDatabase("agenda.db");
 
-export const addTarefa = (tarefa, idAtributo) => {
+export const addTarefa = (tarefa) => {
   db.transaction((tx) => {
     tx.executeSql(
       "INSERT INTO Tarefas(xp, titulo, repeticao, descricao, data, hora, status) VALUES (?, ?, ?, ?, ?, ?, ?)",
@@ -18,7 +18,7 @@ export const addTarefa = (tarefa, idAtributo) => {
         tx.executeSql(
           `INSERT INTO Tarefas_Atributos(id_Tarefa, id_Atributo)
            VALUES (?, ?)`,
-          [idTarefa, idAtributo],
+          [idTarefa, tarefa.atributo],
           () => {
             console.log('Tarefa e referência inseridas com sucesso');
           },
