@@ -10,7 +10,7 @@ import {
   Dimensions,
 } from "react-native";
 import * as SQLite from "expo-sqlite";
-import { getAtributos, delAtributo } from "../../Database/atributosDatabase";
+import { getAtributos, delAtributo } from "../../../Database/atributosDatabase";
 
 export default function ListaAtributos({ navigation }) {
   const [db, setDb] = useState(SQLite.openDatabase("agenda.db"));

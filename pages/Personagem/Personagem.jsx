@@ -1,7 +1,7 @@
 import React from "react";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import AtributosRotas from "../Atributos/AtributosRotas";
-import InventarioRotas from "../Inventario/InventarioRotas";
+import AtributosRotas from "./Atributos/AtributosRotas";
+import InventarioRotas from "./Inventario/InventarioRotas";
 
 const Tab = createMaterialTopTabNavigator();
 

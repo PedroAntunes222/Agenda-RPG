@@ -3,7 +3,6 @@ import {NavigationContainer} from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import TarefasRotas from "../Tarefas/TarefasRotas";
-import AtributosRotas from "../Atributos/AtributosRotas";
 import Personagem from "../Personagem/Personagem";
 
 export default function BottomMenu() {

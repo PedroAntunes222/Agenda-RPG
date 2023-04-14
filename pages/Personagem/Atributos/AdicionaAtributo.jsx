@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Text , View, StyleSheet, SafeAreaView, ScrollView, Button, TouchableOpacity, Dimensions } from 'react-native';
 import { TextInput, FAB } from 'react-native-paper';
-import { addAtributo } from '../../Database/atributosDatabase';
+import { addAtributo } from '../../../Database/atributosDatabase';
 import ColorPicker from 'react-native-wheel-color-picker'
-import Atributo from '../../class/atributo';
+import Atributo from '../../../class/atributo';
 
 export default function AdicionaAtributo() {
 

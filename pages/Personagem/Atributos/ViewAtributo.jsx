@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Text , View, StyleSheet, SafeAreaView, ScrollView, Button, TouchableOpacity } from 'react-native';
 import * as SQLite from 'expo-sqlite';
-import { getAtributo } from '../../Database/atributosDatabase';
-import Atributo from '../../class/atributo';
+import { getAtributo } from '../../../Database/atributosDatabase';
+import Atributo from '../../../class/atributo';
 
 export default function ViewAtributo({navigation, route}) {
 

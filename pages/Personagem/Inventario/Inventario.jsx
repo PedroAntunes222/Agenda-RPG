@@ -9,12 +9,12 @@ import {
   TouchableOpacity,
 } from "react-native";
 import * as SQLite from "expo-sqlite";
-import { getItens, addItem } from "../../Database/ItemDatabase";
-import Item from "../../class/item";
+import { getItens, addItem } from "../../../Database/ItemDatabase";
+import Item from "../../../class/item";
 
 export default function Inventario({navigation}) {
   const [db, setDb] = useState(SQLite.openDatabase("agenda.db"));
-  const [itens, setItens] = useState();
+  const [itens, setItens] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const handleAtributos = (atributos) => {
