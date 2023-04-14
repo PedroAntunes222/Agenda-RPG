@@ -13,17 +13,30 @@ export const addTarefa = (tarefa) => {
         tarefa.data,
         tarefa.hora,
         tarefa.status,
-      ],(_, { insertId }) => {
+      ],
+      (_, { insertId }) => {
         const idTarefa = insertId;
         tx.executeSql(
           `INSERT INTO Tarefas_Atributos(id_Tarefa, id_Atributo)
            VALUES (?, ?)`,
           [idTarefa, tarefa.atributo],
           () => {
-            console.log('Tarefa e referência inseridas com sucesso');
+            console.log("Tarefa e referência inseridas com sucesso");
           },
           (tx, error) => {
-            console.log('Erro ao inserir referência:', error);
+            console.log("Erro ao inserir referência:", error);
+            return false;
+          }
+        );
+        tx.executeSql(
+          `INSERT INTO Recompensa_Item(id_Tarefa, id_Item)
+           VALUES (?, ?)`,
+          [idTarefa, tarefa.item],
+          () => {
+            console.log("Tarefa e Item inseridos com sucesso");
+          },
+          (tx, error) => {
+            console.log("Erro ao inserir referência:", error);
             return false;
           }
         );
@@ -50,24 +63,19 @@ export const getTarefas = (callback) => {
   });
 };
 
-export const getTarefasAtributos = (callback) => {
-  db.transaction((tx) => {
-    tx.executeSql(
-      "SELECT * FROM Tarefas_Atributos",
-      null,
-      (txObj, resultSet) => callback(resultSet.rows._array),
-      (txObj, error) => console.log(error)
-    );
-  });
-};
-
 export const getTarefa = (id, callback) => {
   db.transaction((tx) => {
     tx.executeSql(
-     `SELECT Tarefas.*, Atributos.nome AS atributo_nome, Atributos.cor AS atributo_cor FROM Tarefas 
+      `SELECT Tarefas.*, 
+      Atributos.nome AS atributo_nome, Atributos.cor AS atributo_cor,
+      Itens.nome AS item_nome
+      FROM Tarefas
       LEFT JOIN Tarefas_Atributos ON Tarefas.id = Tarefas_Atributos.id_Tarefa 
       LEFT JOIN Atributos ON Tarefas_Atributos.id_Atributo = Atributos.id 
-      WHERE Tarefas.id=?`,[id],
+      LEFT JOIN Recompensa_Item ON Tarefas.id = Recompensa_Item.id_Tarefa 
+      LEFT JOIN Itens ON Recompensa_Item.id_Item = Itens.id
+      WHERE Tarefas.id=?`,
+      [id],
       (txObj, resultSet) => callback(resultSet.rows._array),
       (txObj, error) => console.log(error)
     );
@@ -86,7 +94,7 @@ export const putTarefa = (tarefa) => {
         tarefa.data,
         tarefa.hora,
         tarefa.status,
-        tarefa.id
+        tarefa.id,
       ],
       (txObj, resultSet) => {
         console.log(resultSet);

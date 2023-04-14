@@ -14,17 +14,19 @@ import ModalSelector from "react-native-modal-selector";
 import { TextInput, FAB } from "react-native-paper";
 import { addTarefa } from "../../Database/tarefasDatabase";
 import { getAtributos } from "../../Database/atributosDatabase";
+import { getItens } from "../../Database/ItemDatabase";
 // import { getTarefasAtributos } from "../../Database/tarefasDatabase";
 import Tarefa from "../../class/tarefa";
 
 export default function AdicionaTarefa() {
-  
   const [showData, setShowData] = useState(false);
   const [showHora, setShowHora] = useState(false);
 
   const [db, setDb] = useState(SQLite.openDatabase("agenda.db"));
   const [atributos, setAtributos] = useState();
+  const [itens, setItens] = useState();
   const [atributosDisponiveis, setAtributosDisponiveis] = useState([]);
+  const [itensDisponiveis, setItensDisponiveis] = useState([]);
 
   const [XP, setXP] = useState("");
   const [titulo, setTitulo] = useState("");
@@ -33,18 +35,30 @@ export default function AdicionaTarefa() {
   const [data, setData] = useState(new Date());
   const [hora, setHora] = useState(new Date());
   const [atributoUsado, setatributoUsado] = useState();
+  const [recompensaItem, setRecompensaItem] = useState();
 
-  useEffect(()=>{
+  useEffect(() => {
+    getItens(setItens);
     getAtributos(setAtributos);
-    // getTarefasAtributos(setAtributos)
-    // console.log(atributos);
+    // console.log(itens);
   }, [db]);
 
-  useEffect(()=>{
+  useEffect(() => {
     // console.log(atributos);
-    if(atributos){
-      let montaAtributos = atributos.map((atributo, index)=>({key:atributo.id, label: atributo.nome}));
+    if (atributos) {
+      let montaAtributos = atributos.map((atributo) => ({
+        key: atributo.id,
+        label: atributo.nome,
+      }));
       setAtributosDisponiveis(montaAtributos);
+    }
+    if (itens) {
+      let montaItens = itens.map((item) => ({
+        key: item.id,
+        label: item.nome,
+      }));
+      setItensDisponiveis(montaItens);
+      console.log(itensDisponiveis);
     }
   }, [atributos]);
 
@@ -66,7 +80,8 @@ export default function AdicionaTarefa() {
       dataTarefa,
       horaTarefa,
       "Ativo",
-      atributoUsado
+      atributoUsado,
+      recompensaItem
     );
 
     // let str;
@@ -77,13 +92,13 @@ export default function AdicionaTarefa() {
     addTarefa(novaTarefa);
   };
 
-  const changeData = (event, selectedDate) => {
+  const changeData = (selectedDate) => {
     let currentDate = selectedDate;
     setShowData(false);
     setData(currentDate);
   };
 
-  const changeHora = (event, selectedHora) => {
+  const changeHora = (selectedHora) => {
     let currentHora = selectedHora;
     setShowHora(false);
     setHora(currentHora);
@@ -157,16 +172,19 @@ export default function AdicionaTarefa() {
               onChange={changeData}
             />
           )}
+
           <TouchableOpacity onPress={() => setShowHora(true)}>
             <TextInput
               label="Hora"
               mode="outlined"
               disabled
-              value={hora.toLocaleTimeString("pt-BR", {
-                hour: "2-digit",
-                minute: "2-digit",
-                hour12: false,
-              }) || ""}
+              value={
+                hora.toLocaleTimeString("pt-BR", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: false,
+                }) || ""
+              }
               disabledTextColor="white"
               textColor="#fff"
               outlineColor="#fff"
@@ -203,6 +221,28 @@ export default function AdicionaTarefa() {
               selectStyle={{ borderWidth: 1, borderColor: "white" }} // borda do input
               onChange={(option) => {
                 setatributoUsado(option.key);
+              }}
+            />
+          </View>
+
+          <View
+            style={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "space-around",
+            }}
+          >
+            <ModalSelector
+              style={{ width: "95%" }}
+              data={itensDisponiveis}
+              initValue="Itens"
+              initValueTextStyle={{ color: "white" }} // 'placeholder'
+              optionTextStyle={{ color: "black" }} // item nao selecionado na lista
+              selectedItemTextStyle={{ color: "green" }} // item selecionado na lista
+              selectTextStyle={{ color: "white" }} // texto do input
+              selectStyle={{ borderWidth: 1, borderColor: "white" }} // borda do input
+              onChange={(option) => {
+                setRecompensaItem(option.key);
               }}
             />
           </View>
