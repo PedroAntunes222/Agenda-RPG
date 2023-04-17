@@ -40,6 +40,18 @@ export const addTarefa = (tarefa) => {
             return false;
           }
         );
+        tx.executeSql(
+          `INSERT INTO Recompensa_Magia(id_Tarefa, id_Magia)
+           VALUES (?, ?)`,
+          [idTarefa, tarefa.magia],
+          () => {
+            console.log("Tarefa e Magia inseridos com sucesso");
+          },
+          (tx, error) => {
+            console.log("Erro ao inserir referência:", error);
+            return false;
+          }
+        );
       },
       (txObj, resultSet) => {
         console.log(resultSet);
@@ -68,12 +80,15 @@ export const getTarefa = (id, callback) => {
     tx.executeSql(
       `SELECT Tarefas.*, 
       Atributos.nome AS atributo_nome, Atributos.cor AS atributo_cor,
-      Itens.nome AS item_nome
+      Itens.nome AS item_nome,
+      Magias.nome AS magia_nome
       FROM Tarefas
       LEFT JOIN Tarefas_Atributos ON Tarefas.id = Tarefas_Atributos.id_Tarefa 
       LEFT JOIN Atributos ON Tarefas_Atributos.id_Atributo = Atributos.id 
       LEFT JOIN Recompensa_Item ON Tarefas.id = Recompensa_Item.id_Tarefa 
       LEFT JOIN Itens ON Recompensa_Item.id_Item = Itens.id
+      LEFT JOIN Recompensa_Magia ON Tarefas.id = Recompensa_Magia.id_Tarefa 
+      LEFT JOIN Magias ON Recompensa_Magia.id_Magia = Magias.id
       WHERE Tarefas.id=?`,
       [id],
       (txObj, resultSet) => callback(resultSet.rows._array),

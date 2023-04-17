@@ -15,30 +15,37 @@ import { TextInput, FAB } from "react-native-paper";
 import { addTarefa } from "../../Database/tarefasDatabase";
 import { getAtributos } from "../../Database/atributosDatabase";
 import { getItens } from "../../Database/ItemDatabase";
+import { getMagias } from "../../Database/magiaDatabase";
 // import { getTarefasAtributos } from "../../Database/tarefasDatabase";
 import Tarefa from "../../class/tarefa";
 
 export default function AdicionaTarefa() {
-  const [showData, setShowData] = useState(false);
-  const [showHora, setShowHora] = useState(false);
 
   const [db, setDb] = useState(SQLite.openDatabase("agenda.db"));
+
+  const [data, setData] = useState(new Date()); 
+  const [hora, setHora] = useState(new Date());
   const [atributos, setAtributos] = useState();
-  const [itens, setItens] = useState();
   const [atributosDisponiveis, setAtributosDisponiveis] = useState([]);
+  const [itens, setItens] = useState();
   const [itensDisponiveis, setItensDisponiveis] = useState([]);
+  const [magias, setMagias] = useState();
+  const [magiasDisponiveis, setMagiasDisponiveis] = useState([]);
+  
+  const [atributoUsado, setatributoUsado] = useState();
+  const [recompensaItem, setRecompensaItem] = useState();
+  const [recompensaMagia, setRecompensaMagia] = useState();
+  const [showData, setShowData] = useState(false);
+  const [showHora, setShowHora] = useState(false);
 
   const [XP, setXP] = useState("");
   const [titulo, setTitulo] = useState("");
   const [descricao, setDescricao] = useState("");
   const [repeticao, setRepeticao] = useState("");
-  const [data, setData] = useState(new Date());
-  const [hora, setHora] = useState(new Date());
-  const [atributoUsado, setatributoUsado] = useState();
-  const [recompensaItem, setRecompensaItem] = useState();
 
   useEffect(() => {
     getItens(setItens);
+    getMagias(setMagias)
     getAtributos(setAtributos);
     // console.log(itens);
   }, [db]);
@@ -58,9 +65,17 @@ export default function AdicionaTarefa() {
         label: item.nome,
       }));
       setItensDisponiveis(montaItens);
-      console.log(itensDisponiveis);
+      // console.log(itensDisponiveis);
     }
-  }, [atributos]);
+    if (magias) {
+      let montaMagias = magias.map((item) => ({
+        key: item.id,
+        label: item.nome,
+      }));
+      setMagiasDisponiveis(montaMagias);
+      // console.log(montaMagias);
+    }
+  }, [atributos, itens, magias]);
 
   const adicionarTarefa = (e) => {
     e.preventDefault();
@@ -71,6 +86,7 @@ export default function AdicionaTarefa() {
       minute: "2-digit",
       hour12: false,
     });
+    
     let novaTarefa = new Tarefa(
       1,
       XP,
@@ -81,7 +97,8 @@ export default function AdicionaTarefa() {
       horaTarefa,
       "Ativo",
       atributoUsado,
-      recompensaItem
+      recompensaItem,
+      recompensaMagia
     );
 
     // let str;
@@ -92,15 +109,15 @@ export default function AdicionaTarefa() {
     addTarefa(novaTarefa);
   };
 
-  const changeData = (selectedDate) => {
+  const changeData = (event, selectedDate) => {
     let currentDate = selectedDate;
     setShowData(false);
     setData(currentDate);
   };
 
-  const changeHora = (selectedHora) => {
+  const changeHora = (event, selectedHora) => {
     let currentHora = selectedHora;
-    setShowHora(false);
+    console.log(selectedHora);
     setHora(currentHora);
   };
 
@@ -195,7 +212,7 @@ export default function AdicionaTarefa() {
           </TouchableOpacity>
           {showHora && (
             <DateTimePicker
-              testID="dateTimePicker"
+              testID="horaTimePicker"
               value={hora}
               mode="time"
               is24Hour={true}
@@ -243,6 +260,28 @@ export default function AdicionaTarefa() {
               selectStyle={{ borderWidth: 1, borderColor: "white" }} // borda do input
               onChange={(option) => {
                 setRecompensaItem(option.key);
+              }}
+            />
+          </View>
+
+          <View
+            style={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "space-around",
+            }}
+          >
+            <ModalSelector
+              style={{ width: "95%" }}
+              data={magiasDisponiveis}
+              initValue="Magias"
+              initValueTextStyle={{ color: "white" }} // 'placeholder'
+              optionTextStyle={{ color: "black" }} // item nao selecionado na lista
+              selectedItemTextStyle={{ color: "green" }} // item selecionado na lista
+              selectTextStyle={{ color: "white" }} // texto do input
+              selectStyle={{ borderWidth: 1, borderColor: "white" }} // borda do input
+              onChange={(option) => {
+                setRecompensaMagia(option.key);
               }}
             />
           </View>
