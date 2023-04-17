@@ -1,7 +1,8 @@
 import React from "react";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import AtributosRotas from "./Atributos/AtributosRotas";
-import InventarioRotas from "./Inventario/InventarioRotas";
+import EquipamentoRotas from "./Inventario/EquipamentoRotas";
+import GrimorioRotas from "./Grimorio/GrimorioRotas";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -22,11 +23,19 @@ export default function Personagem() {
       />
       <Tab.Screen 
         name="Equipamento" 
-        component={InventarioRotas}
+        component={EquipamentoRotas}
         options={{
           headerShown: false
         }}
       />
+      <Tab.Screen 
+        name="Grimorio" 
+        component={GrimorioRotas}
+        options={{
+          headerShown: false
+        }}
+      />
+
     </Tab.Navigator>
   )
 }

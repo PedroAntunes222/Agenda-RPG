@@ -2,9 +2,9 @@
 import React from "react";
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import Inventario from "./Inventario";
+import Equipamento from "./Equipamento";
 
-export default function InventarioRotas() {
+export default function EquipamentoRotas() {
     
   const Stack = createNativeStackNavigator();
 
@@ -19,7 +19,7 @@ export default function InventarioRotas() {
               }}
             >
 
-              <Stack.Screen name="Inventario" component={Inventario} options={{ 
+              <Stack.Screen name="ListaItens" component={Equipamento} options={{ 
                   title: 'Inventario',
                   headerShown: false
               }} />
