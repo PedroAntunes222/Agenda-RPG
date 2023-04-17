@@ -22,6 +22,7 @@ import Tarefa from "../../class/tarefa";
 export default function AdicionaTarefa() {
 
   const [db, setDb] = useState(SQLite.openDatabase("agenda.db"));
+  const [loading, setLoading] = useState(true);
 
   const [data, setData] = useState(new Date()); 
   const [hora, setHora] = useState(new Date());
@@ -38,7 +39,7 @@ export default function AdicionaTarefa() {
   const [showData, setShowData] = useState(false);
   const [showHora, setShowHora] = useState(false);
 
-  const [XP, setXP] = useState("");
+  const [XP, setXP] = useState(0);
   const [titulo, setTitulo] = useState("");
   const [descricao, setDescricao] = useState("");
   const [repeticao, setRepeticao] = useState("");
@@ -75,6 +76,11 @@ export default function AdicionaTarefa() {
       setMagiasDisponiveis(montaMagias);
       // console.log(montaMagias);
     }
+
+    if(magias && itens && atributos){
+      setLoading(false);
+    }
+    
   }, [atributos, itens, magias]);
 
   const adicionarTarefa = (e) => {
@@ -122,6 +128,7 @@ export default function AdicionaTarefa() {
   };
 
   return (
+    loading ? (<Text>Loading</Text>) :
     <SafeAreaView>
       <ScrollView>
         <View>

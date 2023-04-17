@@ -14,6 +14,7 @@ export default function Personagem() {
             tabBarLabelStyle: {color: 'white'},
         }}
       >
+        
       <Tab.Screen 
         name="Atributos" 
         component={AtributosRotas} 
