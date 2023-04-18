@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { LoadingContext } from "../context/loading";
 import {
   Text,
   View,
@@ -13,14 +14,13 @@ import Tarefa from "../../class/tarefa";
 
 export default function ViewTarefa({ navigation, route }) {
   const [db, setDb] = useState(SQLite.openDatabase("agenda.db"));
-  const [loading, setLoading] = useState(true);
   const [tarefa, setTarefa] = useState();
+  
+  const { loading, setLoading } = useContext(LoadingContext);
 
-  const handleTarefa = () => {
-    getTarefa(route.params.id, (tarefa) => {
+  const handleTarefa = async () => {
+    await getTarefa(route.params.id, (tarefa) => {
       setTarefa(tarefa);
-      console.log(tarefa);
-      setLoading(false);
     });
   };
 
@@ -28,44 +28,51 @@ export default function ViewTarefa({ navigation, route }) {
     handleTarefa();
   }, [db]);
 
-  return loading ? (
-    <Text>Loading</Text>
-  ) : (
-    <View>
-      <Text>{tarefa[0].descricao}</Text>
+  useEffect(() => {
+    console.log(tarefa);
+    if (tarefa !== undefined) {
+      setLoading(false);
+    }
+  }, [tarefa]);
 
-      <View style={style.infosTarefa}>
-        <View style={style.infoBloco}>
-          <Text style={style.text}>Data</Text>
-          <Text style={style.text}>{tarefa[0].data}</Text>
-        </View>
+  return (
+    !loading && (
+      <View>
+        <Text>{tarefa[0].descricao}</Text>
 
-        <View style={style.infoBloco}>
-          <Text style={style.text}>Hora</Text>
-          <Text style={style.text}>{tarefa[0].hora}</Text>
-        </View>
+        <View style={style.infosTarefa}>
+          <View style={style.infoBloco}>
+            <Text style={style.text}>Data</Text>
+            <Text style={style.text}>{tarefa[0].data}</Text>
+          </View>
 
-        <View style={style.infoBloco}>
-          <Text style={style.text}>Atributo</Text>
-          <View
-            style={[
-              style.atributo,
-              { backgroundColor: tarefa[0].atributo_cor },
-            ]}
-          ></View>
-        </View>
+          <View style={style.infoBloco}>
+            <Text style={style.text}>Hora</Text>
+            <Text style={style.text}>{tarefa[0].hora}</Text>
+          </View>
 
-        <View style={style.infoBloco}>
-          <Text style={style.text}>Item</Text>
-          <Text style={style.text}>{tarefa[0].item_nome}</Text>
-        </View>
+          <View style={style.infoBloco}>
+            <Text style={style.text}>Atributo</Text>
+            <View
+              style={[
+                style.atributo,
+                { backgroundColor: tarefa[0].atributo_cor },
+              ]}
+            ></View>
+          </View>
 
-        <View style={style.infoBloco}>
-          <Text style={style.text}>Magia</Text>
-          <Text style={style.text}>{tarefa[0].magia_nome}</Text>
+          <View style={style.infoBloco}>
+            <Text style={style.text}>Item</Text>
+            <Text style={style.text}>{tarefa[0].item_nome}</Text>
+          </View>
+
+          <View style={style.infoBloco}>
+            <Text style={style.text}>Magia</Text>
+            <Text style={style.text}>{tarefa[0].magia_nome}</Text>
+          </View>
         </View>
       </View>
-    </View>
+    )
   );
 }
 

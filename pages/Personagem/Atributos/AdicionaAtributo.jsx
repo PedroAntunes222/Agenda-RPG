@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { LoadingContext } from "../../context/loading";
 import {
   Text,
   View,
@@ -16,7 +17,7 @@ import Atributo from "../../../class/atributo";
 
 export default function AdicionaAtributo() {
 
-  const [loading, setLoading] = useState(true);
+  const {loading, setLoading} = useContext(LoadingContext);
   
   const [nome, setNome] = useState("");
   const [cor, setCor] = useState("");
@@ -40,6 +41,10 @@ export default function AdicionaAtributo() {
 
     addAtributo(novoAtributo);
   };
+
+  useEffect(()=>{
+    setLoading(false)
+  },[]);
 
   return (
     <SafeAreaView>

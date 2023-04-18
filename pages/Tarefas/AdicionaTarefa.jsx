@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { LoadingContext } from "../context/loading";
 import {
   Text,
   View,
@@ -16,13 +17,12 @@ import { addTarefa } from "../../Database/tarefasDatabase";
 import { getAtributos } from "../../Database/atributosDatabase";
 import { getItens } from "../../Database/ItemDatabase";
 import { getMagias } from "../../Database/magiaDatabase";
-// import { getTarefasAtributos } from "../../Database/tarefasDatabase";
 import Tarefa from "../../class/tarefa";
 
 export default function AdicionaTarefa() {
 
   const [db, setDb] = useState(SQLite.openDatabase("agenda.db"));
-  const [loading, setLoading] = useState(true);
+  const {loading, setLoading} = useContext(LoadingContext);
 
   const [data, setData] = useState(new Date()); 
   const [hora, setHora] = useState(new Date());
@@ -43,7 +43,7 @@ export default function AdicionaTarefa() {
   const [titulo, setTitulo] = useState("");
   const [descricao, setDescricao] = useState("");
   const [repeticao, setRepeticao] = useState("");
-
+  
   useEffect(() => {
     getItens(setItens);
     getMagias(setMagias)
@@ -123,12 +123,11 @@ export default function AdicionaTarefa() {
 
   const changeHora = (event, selectedHora) => {
     let currentHora = selectedHora;
-    console.log(selectedHora);
+    setShowHora(false);
     setHora(currentHora);
   };
 
   return (
-    loading ? (<Text>Loading</Text>) :
     <SafeAreaView>
       <ScrollView>
         <View>

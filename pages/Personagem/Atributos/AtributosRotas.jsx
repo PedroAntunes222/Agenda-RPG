@@ -11,7 +11,6 @@ export default function AtributosRotas() {
   const Stack = createNativeStackNavigator();
 
   return (
-        <>
             <Stack.Navigator
               screenOptions={{
                 contentStyle:{backgroundColor:'#1E1E1E'},
@@ -36,6 +35,5 @@ export default function AtributosRotas() {
               })} />
 
             </Stack.Navigator>
-        </>
   )
 }

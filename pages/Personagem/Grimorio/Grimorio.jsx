@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { LoadingContext } from "../../context/loading";
 import {
   Text,
   View,
@@ -14,8 +15,9 @@ import Magia from "../../../class/magia";
 
 export default function Grimorio({navigation}) {
   const [db, setDb] = useState(SQLite.openDatabase("agenda.db"));
+  const {loading, setLoading} = useContext(LoadingContext);
+
   const [magias, setMagias] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   const handleMagias = (atributos) => {
     setMagias(atributos);
@@ -47,9 +49,7 @@ export default function Grimorio({navigation}) {
     addMagia(novaMagia);
   };
 
-  return loading ? (
-    <Text>Loading</Text>
-  ) : (
+  return (
     <View>
       
       {magias.map((magia, index) => (

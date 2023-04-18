@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Text,
   View,
@@ -11,11 +11,13 @@ import {
 import * as SQLite from "expo-sqlite";
 import { getItens, addItem } from "../../../Database/ItemDatabase";
 import Item from "../../../class/item";
+import { LoadingContext } from "../../context/loading";
 
 export default function Equipamento({navigation}) {
   const [db, setDb] = useState(SQLite.openDatabase("agenda.db"));
   const [itens, setItens] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const {loading, setLoading} = useContext(LoadingContext);
+
 
   const handleItens = (atributos) => {
     setItens(atributos);
@@ -49,9 +51,7 @@ export default function Equipamento({navigation}) {
     addItem(novoItem);
   };
 
-  return loading ? (
-    <Text>Loading</Text>
-  ) : (
+  return (
     <View>
       {itens.map((item, index) => (
         <View key={index}>

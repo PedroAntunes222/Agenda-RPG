@@ -9,7 +9,6 @@ export default function EquipamentoRotas() {
   const Stack = createNativeStackNavigator();
 
   return (
-        <>
             <Stack.Navigator
               screenOptions={{
                 contentStyle:{backgroundColor:'#1E1E1E'},
@@ -25,6 +24,5 @@ export default function EquipamentoRotas() {
               }} />
 
             </Stack.Navigator>
-        </>
   )
 }

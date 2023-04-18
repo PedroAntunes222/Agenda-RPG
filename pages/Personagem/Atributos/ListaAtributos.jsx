@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { LoadingContext } from "../../context/loading";
 import {
   Text,
   View,
@@ -14,7 +15,8 @@ import { getAtributos, delAtributo } from "../../../Database/atributosDatabase";
 
 export default function ListaAtributos({ navigation }) {
   const [db, setDb] = useState(SQLite.openDatabase("agenda.db"));
-  const [loading, setLoading] = useState(true);
+  const {loading, setLoading} = useContext(LoadingContext);
+
   const [atributos, setAtributos] = useState([]);
 
   const handleAtributos = (atributos) => {
@@ -28,7 +30,8 @@ export default function ListaAtributos({ navigation }) {
   useEffect(() => {
     // atualiza lista ao voltar
     navigation.addListener("focus", () => {
-      getAtributos(handleAtributos);
+    setLoading(true);
+    getAtributos(handleAtributos);
     });
   }, [navigation]);
 
