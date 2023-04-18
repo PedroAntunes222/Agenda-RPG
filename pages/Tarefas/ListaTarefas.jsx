@@ -16,8 +16,8 @@ import Tarefa from "../../class/tarefa";
 
 export default function ListaTarefas({ navigation }) {
   const [db, setDb] = useState(SQLite.openDatabase("agenda.db"));
-  const [tarefas, setTarefas] = useState([]);
-  
+  const [tarefas, setTarefas] = useState();
+
   const { loading, setLoading } = useContext(LoadingContext);
 
   const handleTarefas = (tarefas) => {
@@ -28,6 +28,7 @@ export default function ListaTarefas({ navigation }) {
   useEffect(() => {
     initDB();
     getTarefas(handleTarefas);
+    setLoading(false);
   }, [db]);
 
   useEffect(() => {
@@ -35,13 +36,9 @@ export default function ListaTarefas({ navigation }) {
     navigation.addListener("focus", () => {
       setLoading(true);
       getTarefas(handleTarefas);
+      setLoading(false);
     });
   }, [navigation]);
-
-  useEffect(() => {
-    setLoading(false);
-    // console.log(tarefas);
-  }, [tarefas]);
 
   const DataTarefa = ({ data }) => {
     const meses = [
@@ -74,65 +71,69 @@ export default function ListaTarefas({ navigation }) {
   const windowHeight = Dimensions.get("window").height;
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#1E1E1E", height: windowHeight }}>
-      <ScrollView>
-        <View style={style.lista}>
-          <TouchableOpacity
-            style={[
-              style.card,
-              { alignItems: "center", justifyContent: "center" },
-            ]}
-            onPress={(e) => {
-              navigation.navigate("AddTarefa");
-              setLoading(true);
-            }}
-          >
-            <Text style={{ color: "white", fontSize: 20 }}>
-              {" "}
-              Adicionar Tarefa{" "}
-            </Text>
-          </TouchableOpacity>
-
-          {tarefas.map((tarefa, index) => (
+    tarefas !== undefined && (
+      <SafeAreaView
+        style={{ backgroundColor: "#1E1E1E", height: windowHeight }}
+      >
+        <ScrollView>
+          <View style={style.lista}>
             <TouchableOpacity
-              style={style.card}
-              key={index}
+              style={[
+                style.card,
+                { alignItems: "center", justifyContent: "center" },
+              ]}
               onPress={(e) => {
-                navigation.navigate({
-                  name: "ViewTarefa",
-                  params: {
-                    title: tarefa.titulo,
-                    id: tarefa.id,
-                  },
-                });
+                navigation.navigate("AddTarefa");
                 setLoading(true);
               }}
             >
-              <View style={style.cardInfos}>
-                <View style={style.cardInfo}>
-                  <Text style={{ color: "white", fontSize: 18 }}>
-                    {tarefa.hora}
-                  </Text>
-                  <View
-                    style={[
-                      style.cardAtributo,
-                      { backgroundColor: tarefa.atributo_cor },
-                    ]}
-                  ></View>
-                </View>
-                <View>
-                  <Text style={{ color: "white", fontSize: 24 }}>
-                    {tarefa.titulo}
-                  </Text>
-                </View>
-              </View>
-
-              <DataTarefa data={tarefa.data} />
+              <Text style={{ color: "white", fontSize: 20 }}>
+                {" "}
+                Adicionar Tarefa{" "}
+              </Text>
             </TouchableOpacity>
-          ))}
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+
+            {tarefas.map((tarefa, index) => (
+              <TouchableOpacity
+                style={style.card}
+                key={index}
+                onPress={(e) => {
+                  navigation.navigate({
+                    name: "ViewTarefa",
+                    params: {
+                      title: tarefa.titulo,
+                      id: tarefa.id,
+                    },
+                  });
+                  setLoading(true);
+                }}
+              >
+                <View style={style.cardInfos}>
+                  <View style={style.cardInfo}>
+                    <Text style={{ color: "white", fontSize: 18 }}>
+                      {tarefa.hora}
+                    </Text>
+                    <View
+                      style={[
+                        style.cardAtributo,
+                        { backgroundColor: tarefa.atributo_cor },
+                      ]}
+                    ></View>
+                  </View>
+                  <View>
+                    <Text style={{ color: "white", fontSize: 24 }}>
+                      {tarefa.titulo}
+                    </Text>
+                  </View>
+                </View>
+
+                <DataTarefa data={tarefa.data} />
+              </TouchableOpacity>
+            ))}
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    )
   );
 }
 

@@ -15,7 +15,7 @@ import { getAtributos, delAtributo } from "../../../Database/atributosDatabase";
 
 export default function ListaAtributos({ navigation }) {
   const [db, setDb] = useState(SQLite.openDatabase("agenda.db"));
-  const {loading, setLoading} = useContext(LoadingContext);
+  const { loading, setLoading } = useContext(LoadingContext);
 
   const [atributos, setAtributos] = useState([]);
 
@@ -25,22 +25,19 @@ export default function ListaAtributos({ navigation }) {
 
   useEffect(() => {
     getAtributos(handleAtributos);
+    setLoading(false);
   }, [db]);
 
   useEffect(() => {
     // atualiza lista ao voltar
     navigation.addListener("focus", () => {
-    setLoading(true);
-    getAtributos(handleAtributos);
+      setLoading(true);
+      getAtributos(handleAtributos);
+      setLoading(false);
     });
   }, [navigation]);
 
-  useEffect(() => {
-    setLoading(false);
-    // console.log(atributos);
-  }, [atributos]);
-
-  const ProgressCounter = ({color, progress}) => {
+  const ProgressCounter = ({ color, progress }) => {
     let calc = progress * 10;
     return (
       <View
@@ -52,63 +49,70 @@ export default function ListaAtributos({ navigation }) {
           },
         ]}
       />
-    )
+    );
   };
 
-  const windowHeight = Dimensions.get('window').height;
+  const windowHeight = Dimensions.get("window").height;
 
-  return loading ? (
-    <Text>Loading</Text>
-  ) : (
-    <SafeAreaView style={{backgroundColor:'#1E1E1E', height:windowHeight}}>
-      <ScrollView>
-        <View style={style.lista}>
-          <TouchableOpacity
-            style={style.card}
-            onPress={(e) => navigation.navigate("AddAtributo")}
-          >
-            <Text style={style.cardTitle}> Adicionar Atributo </Text>
-          </TouchableOpacity>
-
-          {atributos.map((atributo, index) => (
+  return (
+    atributos !== undefined && (
+      <SafeAreaView
+        style={{ backgroundColor: "#1E1E1E", height: windowHeight }}
+      >
+        <ScrollView>
+          <View style={style.lista}>
             <TouchableOpacity
-              key={index}
-              onPress={(e) =>{
-                navigation.navigate({
-                  name: "ViewAtributo",
-                  params: {
-                    title: atributo.nome,
-                    id: atributo.id,
-                  },
-                })
-                setLoading(true)
-              }
-              }
+              style={style.card}
+              onPress={(e) => navigation.navigate("AddAtributo")}
             >
-              <View style={style.cardInfos}>
-                <View style={style.cardHeader}>
-                  <View style={style.cardAtributo}>
-                    <Text style={{color: 'white', fontSize: 20}}>{atributo.nome}</Text>
-                  </View>
-
-                  <View style={style.cardNivel}>
-                    <Text style={{color: 'white', fontSize: 26}}>{atributo.nivel}</Text>
-                  </View>
-                </View>
-
-                <View style={style.cardXP}>
-                  <ProgressCounter
-                    color={atributo.cor}
-                    progress={atributo.xp}
-                  />
-                  <Text style={{color: 'white', fontSize: 28}}>{atributo.xp} / 10</Text>
-                </View>
-              </View>
+              <Text style={style.cardTitle}> Adicionar Atributo </Text>
             </TouchableOpacity>
-          ))}
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+
+            {atributos.map((atributo, index) => (
+              <TouchableOpacity
+                key={index}
+                onPress={(e) => {
+                  navigation.navigate({
+                    name: "ViewAtributo",
+                    params: {
+                      title: atributo.nome,
+                      id: atributo.id,
+                    },
+                  });
+                  setLoading(true);
+                }}
+              >
+                <View style={style.cardInfos}>
+                  <View style={style.cardHeader}>
+                    <View style={style.cardAtributo}>
+                      <Text style={{ color: "white", fontSize: 20 }}>
+                        {atributo.nome}
+                      </Text>
+                    </View>
+
+                    <View style={style.cardNivel}>
+                      <Text style={{ color: "white", fontSize: 26 }}>
+                        {atributo.nivel}
+                      </Text>
+                    </View>
+                  </View>
+
+                  <View style={style.cardXP}>
+                    <ProgressCounter
+                      color={atributo.cor}
+                      progress={atributo.xp}
+                    />
+                    <Text style={{ color: "white", fontSize: 28 }}>
+                      {atributo.xp} / 10
+                    </Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    )
   );
 }
 
@@ -122,9 +126,9 @@ const style = StyleSheet.create({
     height: 120,
     padding: 10,
     borderRadius: 10,
-    flexDirection: 'row',
-    backgroundColor: '#323232',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    backgroundColor: "#323232",
+    justifyContent: "space-between",
     alignItems: "center",
     justifyContent: "center",
   },

@@ -1,5 +1,6 @@
 import React, { createContext, useState } from "react";
 import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
+import LoadingIcon from "../components/LoadingIcon";
 
 export const LoadingContext = createContext(true);
 
@@ -9,9 +10,7 @@ export const LoadingProvider = ({ children }) => {
   return (
     <LoadingContext.Provider value={{ loading, setLoading }}>
       {loading && (
-        <View style={style.loading}>
-          <ActivityIndicator size="large" color="white" />
-        </View>
+        <LoadingIcon />
       )}
       {children}
     </LoadingContext.Provider>

@@ -16,9 +16,8 @@ import ColorPicker from "react-native-wheel-color-picker";
 import Atributo from "../../../class/atributo";
 
 export default function AdicionaAtributo() {
+  const { loading, setLoading } = useContext(LoadingContext);
 
-  const {loading, setLoading} = useContext(LoadingContext);
-  
   const [nome, setNome] = useState("");
   const [cor, setCor] = useState("");
   const [nivel, setNivel] = useState("");
@@ -42,9 +41,9 @@ export default function AdicionaAtributo() {
     addAtributo(novoAtributo);
   };
 
-  useEffect(()=>{
-    setLoading(false)
-  },[]);
+  useEffect(() => {
+    setLoading(false);
+  }, []);
 
   return (
     <SafeAreaView>
