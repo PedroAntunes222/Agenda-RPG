@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { LoadingContext } from "../../context/loading";
+import { LoadingContext } from "../../../context/loading";
 import {
   Text,
   View,
@@ -22,20 +22,16 @@ export default function ViewAtributo({ navigation, route }) {
   const handleAtributo = async () => {
     await getAtributo(route.params.id, (atributo) => {
       setAtributo(atributo);
-      // console.log(atributo);
     });
   };
 
   useEffect(() => {
     handleAtributo();
+    setLoading(false);
   }, [db]);
 
-  useEffect(() => {
-    setLoading(false);
-  }, [atributo]);
-
   return (
-    !loading && (
+    atributo!==undefined && (
       <View>
         <Text>{atributo[0].nome}</Text>
         <Text>{atributo[0].nivel}</Text>

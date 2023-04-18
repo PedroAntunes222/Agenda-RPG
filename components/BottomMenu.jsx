@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import TarefasRotas from "../Tarefas/TarefasRotas";
-import Personagem from "../Personagem/Personagem";
+import TarefasRotas from "../pages/Tarefas/TarefasRotas";
+import Personagem from "../pages/Personagem/Personagem";
 
 export default function BottomMenu() {
   const Tab = createBottomTabNavigator();

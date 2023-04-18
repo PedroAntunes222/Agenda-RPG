@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { LoadingContext } from "../context/loading";
+import { LoadingContext } from "../../context/loading";
 import {
   Text,
   View,
@@ -26,17 +26,11 @@ export default function ViewTarefa({ navigation, route }) {
 
   useEffect(() => {
     handleTarefa();
+    setLoading(false);
   }, [db]);
 
-  useEffect(() => {
-    console.log(tarefa);
-    if (tarefa !== undefined) {
-      setLoading(false);
-    }
-  }, [tarefa]);
-
   return (
-    !loading && (
+    tarefa!==undefined && (
       <View>
         <Text>{tarefa[0].descricao}</Text>
 

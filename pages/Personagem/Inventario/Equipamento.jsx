@@ -11,7 +11,7 @@ import {
 import * as SQLite from "expo-sqlite";
 import { getItens, addItem } from "../../../Database/ItemDatabase";
 import Item from "../../../class/item";
-import { LoadingContext } from "../../context/loading";
+import { LoadingContext } from "../../../context/loading";
 
 export default function Equipamento({navigation}) {
   const [db, setDb] = useState(SQLite.openDatabase("agenda.db"));

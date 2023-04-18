@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { LoadingContext } from "../../context/loading";
+import { LoadingContext } from "../../../context/loading";
 import {
   Text,
   View,
@@ -73,7 +73,7 @@ export default function ListaAtributos({ navigation }) {
           {atributos.map((atributo, index) => (
             <TouchableOpacity
               key={index}
-              onPress={(e) =>
+              onPress={(e) =>{
                 navigation.navigate({
                   name: "ViewAtributo",
                   params: {
@@ -81,6 +81,8 @@ export default function ListaAtributos({ navigation }) {
                     id: atributo.id,
                   },
                 })
+                setLoading(true)
+              }
               }
             >
               <View style={style.cardInfos}>

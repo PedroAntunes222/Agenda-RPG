@@ -1,6 +1,6 @@
 import React, {createContext, useState} from 'react'
-import BottomMenu from './pages/components/BottomMenu';
-import { LoadingProvider } from './pages/context/loading';
+import BottomMenu from './components/BottomMenu';
+import { LoadingProvider } from './context/loading';
 
 export default function App() {
   return (

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { LoadingContext } from "../../context/loading";
+import { LoadingContext } from "../../../context/loading";
 import {
   Text,
   View,

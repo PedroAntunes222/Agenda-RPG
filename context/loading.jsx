@@ -1,5 +1,5 @@
 import React, { createContext, useState } from "react";
-import { View,Text, StyleSheet } from "react-native";
+import { View,Text, StyleSheet, ActivityIndicator } from "react-native";
 
 export const LoadingContext = createContext(true);
 
