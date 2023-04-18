@@ -12,6 +12,7 @@ import {
 import * as SQLite from "expo-sqlite";
 import { initDB } from "../../Database/sqsliteDatabase";
 import { getTarefas, delTarefa } from "../../Database/tarefasDatabase";
+import DataTarefa from "./components/DataTarefa";
 import Tarefa from "../../class/tarefa";
 
 export default function ListaTarefas({ navigation }) {
@@ -39,34 +40,6 @@ export default function ListaTarefas({ navigation }) {
       setLoading(false);
     });
   }, [navigation]);
-
-  const DataTarefa = ({ data }) => {
-    const meses = [
-      "Janeiro",
-      "Fevereiro",
-      "Março",
-      "Abril",
-      "Maio",
-      "Junho",
-      "Julho",
-      "Agosto",
-      "Setembro",
-      "Outubro",
-      "Novembro",
-      "Dezembro",
-    ];
-    let dataSeparada = data.split("/");
-    let dia = dataSeparada[0];
-    let mes = dataSeparada[1];
-    let mesExtenso = meses[mes - 1].slice(0, 3);
-
-    return (
-      <View style={style.cardData}>
-        <Text style={{ color: "white", fontSize: 24 }}>{dia}</Text>
-        <Text style={{ color: "white", fontSize: 20 }}>{mesExtenso}</Text>
-      </View>
-    );
-  };
 
   const windowHeight = Dimensions.get("window").height;
 
@@ -127,7 +100,7 @@ export default function ListaTarefas({ navigation }) {
                   </View>
                 </View>
 
-                <DataTarefa data={tarefa.data} />
+                <DataTarefa data={tarefa.data} hora={tarefa.hora} />
               </TouchableOpacity>
             ))}
           </View>
@@ -167,7 +140,7 @@ const style = StyleSheet.create({
     borderRadius: 100,
   },
   cardData: {
-    backgroundColor: "#1e1e1e",
+    // backgroundColor: "#1e1e1e",
     borderRadius: 10,
     padding: 5,
     minWidth: 80,

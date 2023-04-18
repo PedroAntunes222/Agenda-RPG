@@ -63,7 +63,10 @@ export default function ListaAtributos({ navigation }) {
           <View style={style.lista}>
             <TouchableOpacity
               style={style.card}
-              onPress={(e) => navigation.navigate("AddAtributo")}
+              onPress={(e) => {
+                navigation.navigate("AddAtributo");
+                setLoading(true);
+              }}
             >
               <Text style={style.cardTitle}> Adicionar Atributo </Text>
             </TouchableOpacity>
