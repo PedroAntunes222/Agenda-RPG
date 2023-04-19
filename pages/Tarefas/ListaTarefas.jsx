@@ -12,7 +12,7 @@ import {
 import * as SQLite from "expo-sqlite";
 import { initDB } from "../../Database/sqsliteDatabase";
 import { getTarefas, delTarefa } from "../../Database/tarefasDatabase";
-import DataTarefa from "./components/DataTarefa";
+import DataTarefa from "./components/DataTarefa/DataTarefa";
 import Tarefa from "../../class/tarefa";
 
 export default function ListaTarefas({ navigation }) {
