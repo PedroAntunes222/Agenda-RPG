@@ -11,6 +11,8 @@ import {
 } from "react-native";
 import * as SQLite from "expo-sqlite";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+
 import ModalSelector from "react-native-modal-selector";
 import { TextInput, FAB } from "react-native-paper";
 import { addTarefa } from "../../Database/tarefasDatabase";
@@ -18,35 +20,39 @@ import { getAtributos } from "../../Database/atributosDatabase";
 import { getItens } from "../../Database/ItemDatabase";
 import { getMagias } from "../../Database/magiaDatabase";
 import Tarefa from "../../class/tarefa";
+import moment from "moment";
+import "moment-timezone";
 
 export default function AdicionaTarefa() {
-
   const [db, setDb] = useState(SQLite.openDatabase("agenda.db"));
-  const {loading, setLoading} = useContext(LoadingContext);
+  const { loading, setLoading } = useContext(LoadingContext);
 
-  const [data, setData] = useState(new Date()); 
-  const [hora, setHora] = useState(new Date());
-  const [atributos, setAtributos] = useState();
-  const [atributosDisponiveis, setAtributosDisponiveis] = useState([]);
-  const [itens, setItens] = useState();
-  const [itensDisponiveis, setItensDisponiveis] = useState([]);
-  const [magias, setMagias] = useState();
-  const [magiasDisponiveis, setMagiasDisponiveis] = useState([]);
-  
-  const [atributoUsado, setatributoUsado] = useState();
-  const [recompensaItem, setRecompensaItem] = useState();
-  const [recompensaMagia, setRecompensaMagia] = useState();
+  const [data, setData] = useState();
+  const [hora, setHora] = useState();
+
   const [showData, setShowData] = useState(false);
   const [showHora, setShowHora] = useState(false);
+
+  const [atributos, setAtributos] = useState();
+  const [atributosDisponiveis, setAtributosDisponiveis] = useState([]);
+  const [atributoUsado, setatributoUsado] = useState();
+
+  const [itens, setItens] = useState();
+  const [itensDisponiveis, setItensDisponiveis] = useState([]);
+  const [recompensaItem, setRecompensaItem] = useState();
+
+  const [magias, setMagias] = useState();
+  const [magiasDisponiveis, setMagiasDisponiveis] = useState([]);
+  const [recompensaMagia, setRecompensaMagia] = useState();
 
   const [XP, setXP] = useState(0);
   const [titulo, setTitulo] = useState("");
   const [descricao, setDescricao] = useState("");
   const [repeticao, setRepeticao] = useState("");
-  
+
   useEffect(() => {
     getItens(setItens);
-    getMagias(setMagias)
+    getMagias(setMagias);
     getAtributos(setAtributos);
     // console.log(itens);
   }, [db]);
@@ -77,30 +83,24 @@ export default function AdicionaTarefa() {
       // console.log(montaMagias);
     }
 
-    if(magias && itens && atributos){
+    if (magias && itens && atributos) {
       setLoading(false);
     }
-    
+
   }, [atributos, itens, magias]);
 
   const adicionarTarefa = (e) => {
+
     e.preventDefault();
 
-    let dataTarefa = data.toLocaleDateString("pt-BR");
-    let horaTarefa = hora.toLocaleTimeString("pt-BR", {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-    });
-    
     let novaTarefa = new Tarefa(
       1,
       XP,
       titulo,
       descricao,
       repeticao,
-      dataTarefa,
-      horaTarefa,
+      data,
+      hora,
       "Ativo",
       atributoUsado,
       recompensaItem,
@@ -115,16 +115,18 @@ export default function AdicionaTarefa() {
     addTarefa(novaTarefa);
   };
 
-  const changeData = (event, selectedDate) => {
-    let currentDate = selectedDate;
+  const handleDateConfirm = (date) => {
+    const dateformat = moment(date).format("DD/MM/YYYY");
+    setData(dateformat);
     setShowData(false);
-    setData(currentDate);
+    console.log("A date has been picked: ", dateformat);
   };
 
-  const changeHora = (event, selectedHora) => {
-    let currentHora = selectedHora;
+  const handleTimeConfirm = (time) => {
+    const timeformat = moment(time).format("HH:mm");
+    setHora(timeformat);
     setShowHora(false);
-    setHora(currentHora);
+    console.log("A date has been picked: ", timeformat);
   };
 
   return (
@@ -177,7 +179,7 @@ export default function AdicionaTarefa() {
               label="Data"
               mode="outlined"
               disabled
-              value={data.toLocaleDateString("pt-BR") || ""}
+              value={data || ""}
               disabledTextColor="white"
               textColor="#fff"
               outlineColor="#fff"
@@ -186,13 +188,14 @@ export default function AdicionaTarefa() {
               theme={{ colors: { onSurfaceVariant: "#fff" } }}
             />
           </TouchableOpacity>
+
           {showData && (
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={data}
+            <DateTimePickerModal
+              isVisible={showData}
               mode="date"
-              locale="pt-BR"
-              onChange={changeData}
+              is24Hour={true}
+              onConfirm={handleDateConfirm}
+              onCancel={(e) => setShowData(false)}
             />
           )}
 
@@ -201,13 +204,7 @@ export default function AdicionaTarefa() {
               label="Hora"
               mode="outlined"
               disabled
-              value={
-                hora.toLocaleTimeString("pt-BR", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  hour12: false,
-                }) || ""
-              }
+              value={hora || ""}
               disabledTextColor="white"
               textColor="#fff"
               outlineColor="#fff"
@@ -216,13 +213,14 @@ export default function AdicionaTarefa() {
               theme={{ colors: { onSurfaceVariant: "#fff" } }}
             />
           </TouchableOpacity>
+
           {showHora && (
-            <DateTimePicker
-              testID="horaTimePicker"
-              value={hora}
+            <DateTimePickerModal
+              isVisible={showHora}
               mode="time"
               is24Hour={true}
-              onChange={changeHora}
+              onConfirm={handleTimeConfirm}
+              onCancel={(e) => setHora(false)}
             />
           )}
 

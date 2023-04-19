@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 import moment from "moment";
-import 'moment-timezone';
+import "moment-timezone";
 
 const momentFormater = (dataHora, formato) => {
   const dataFormatada = moment(dataHora, formato).format(formato);
@@ -9,13 +9,21 @@ const momentFormater = (dataHora, formato) => {
 };
 
 export default function DataTarefa({ data, hora }) {
+  let colorData;
+
   const dataRecebidaFormat = momentFormater(data, "DD/MM/YYYY");
 
-  const dataAtualFormat = momentFormater(moment().tz('America/Sao_Paulo'), "DD/MM/YYYY");
+  const dataAtualFormat = momentFormater(
+    moment().tz("America/Sao_Paulo"),
+    "DD/MM/YYYY"
+  );
 
   const horaRecebidaFormat = momentFormater(hora, "HH:mm");
 
-  const horaAtualFormat = momentFormater(moment().tz('America/Sao_Paulo'), "HH:mm");
+  const horaAtualFormat = momentFormater(
+    moment().tz("America/Sao_Paulo"),
+    "HH:mm"
+  );
 
   if (dataAtualFormat === dataRecebidaFormat) {
     // console.log("o dia é hoje");
@@ -23,11 +31,11 @@ export default function DataTarefa({ data, hora }) {
 
     if (horaAtualFormat > horaRecebidaFormat) {
       // console.log("a hora ja passou");
-      colorData = "#990e1f";
+      colorData = "orange";
     }
   } else if (dataAtualFormat < dataRecebidaFormat) {
     // console.log("o dia ainda n chegou");
-    colorData = "blue";
+    colorData = "#134896";
   } else {
     // console.log("o dia já passou");
     colorData = "#990e1f";
@@ -51,7 +59,6 @@ export default function DataTarefa({ data, hora }) {
   const dataRecebida = moment(data, "DD/MM/YYYY");
   const dia = momentFormater(dataRecebida, "DD");
   const mes = momentFormater(dataRecebida, "MM");
-
   const mesExtenso = meses[mes - 1].slice(0, 3);
 
   return (
