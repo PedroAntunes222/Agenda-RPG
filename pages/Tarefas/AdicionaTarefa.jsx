@@ -58,39 +58,32 @@ export default function AdicionaTarefa() {
   }, [db]);
 
   useEffect(() => {
-    // console.log(atributos);
-    if (atributos) {
+    if (atributos && itens && magias) {
       let montaAtributos = atributos.map((atributo) => ({
         key: atributo.id,
         label: atributo.nome,
       }));
       setAtributosDisponiveis(montaAtributos);
-    }
-    if (itens) {
+
       let montaItens = itens.map((item) => ({
         key: item.id,
         label: item.nome,
       }));
       setItensDisponiveis(montaItens);
       // console.log(itensDisponiveis);
-    }
-    if (magias) {
+
       let montaMagias = magias.map((item) => ({
         key: item.id,
         label: item.nome,
       }));
       setMagiasDisponiveis(montaMagias);
       // console.log(montaMagias);
-    }
 
-    if (magias && itens && atributos) {
       setLoading(false);
     }
-
   }, [atributos, itens, magias]);
 
   const adicionarTarefa = (e) => {
-
     e.preventDefault();
 
     let novaTarefa = new Tarefa(
