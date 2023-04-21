@@ -37,6 +37,19 @@ export const getAtributo = (id, callback) => {
   });
 };
 
+export const uparAtributo = (atributo) => {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "UPDATE Atributos SET nivel=?, xp=? WHERE id=?",
+      [atributo.nivel, atributo.xp, atributo.id],
+      (txObj, resultSet) => {
+        console.log(resultSet);
+      },
+      (txObj, error) => console.log(error)
+    );
+  });
+};
+
 export const putAtributo = (atributo) => {
   db.transaction((tx) => {
     tx.executeSql(
