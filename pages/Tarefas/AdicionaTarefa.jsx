@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { LoadingContext } from "../../context/loading";
 import {
   Text,
   View,
@@ -8,18 +7,19 @@ import {
   ScrollView,
   Button,
   TouchableOpacity,
+  CheckBox,
 } from "react-native";
-import * as SQLite from "expo-sqlite";
-import DateTimePicker from "@react-native-community/datetimepicker";
+import BouncyCheckboxGroup from "react-native-bouncy-checkbox-group";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-
-import ModalSelector from "react-native-modal-selector";
-import { TextInput, FAB } from "react-native-paper";
-import { addTarefa } from "../../Database/tarefasDatabase";
 import { getAtributos } from "../../Database/atributosDatabase";
-import { getItens } from "../../Database/ItemDatabase";
+import { addTarefa } from "../../Database/tarefasDatabase";
 import { getMagias } from "../../Database/magiaDatabase";
+import ModalSelector from "react-native-modal-selector";
+import { LoadingContext } from "../../context/loading";
+import { getItens } from "../../Database/ItemDatabase";
+import { TextInput, FAB } from "react-native-paper";
 import Tarefa from "../../class/tarefa";
+import * as SQLite from "expo-sqlite";
 import moment from "moment";
 import "moment-timezone";
 
@@ -27,8 +27,8 @@ export default function AdicionaTarefa() {
   const [db, setDb] = useState(SQLite.openDatabase("agenda.db"));
   const { loading, setLoading } = useContext(LoadingContext);
 
-  const [data, setData] = useState();
-  const [hora, setHora] = useState();
+  const [data, setData] = useState(moment().format("DD/MM/YYYY"));
+  const [hora, setHora] = useState(moment().format("HH:mm"));
 
   const [showData, setShowData] = useState(false);
   const [showHora, setShowHora] = useState(false);
@@ -45,7 +45,7 @@ export default function AdicionaTarefa() {
   const [magiasDisponiveis, setMagiasDisponiveis] = useState([]);
   const [recompensaMagia, setRecompensaMagia] = useState();
 
-  const [XP, setXP] = useState(0);
+  const [XP, setXP] = useState(1);
   const [titulo, setTitulo] = useState("");
   const [descricao, setDescricao] = useState("");
   const [repeticao, setRepeticao] = useState("");
@@ -112,34 +112,25 @@ export default function AdicionaTarefa() {
     const dateformat = moment(date).format("DD/MM/YYYY");
     setData(dateformat);
     setShowData(false);
-    console.log("A date has been picked: ", dateformat);
   };
 
   const handleTimeConfirm = (time) => {
     const timeformat = moment(time).format("HH:mm");
     setHora(timeformat);
     setShowHora(false);
-    console.log("A date has been picked: ", timeformat);
   };
+
+  const checkboxData = [
+    { id: "0", label: "unico" },
+    { id: "1", label: "diario" },
+    { id: "2", label: "semanal" },
+    { id: "3", label: "mensal" },
+  ];
 
   return (
     <SafeAreaView>
       <ScrollView>
         <View>
-          <TextInput
-            label="XP"
-            mode="outlined"
-            keyboardType="numeric"
-            value={XP || ""}
-            onChangeText={(e) => {
-              setXP(e);
-            }}
-            textColor="#fff"
-            outlineColor="#fff"
-            activeOutlineColor="#fff"
-            style={{ marginHorizontal: 10, backgroundColor: "#323232" }}
-            theme={{ colors: { onSurfaceVariant: "#fff" } }}
-          />
           <TextInput
             label="Titulo"
             mode="outlined"
@@ -148,8 +139,8 @@ export default function AdicionaTarefa() {
               setTitulo(e);
             }}
             textColor="#fff"
-            outlineColor="#fff"
-            activeOutlineColor="#fff"
+            outlineColor="gray"
+            activeOutlineColor="gray"
             style={{ marginHorizontal: 10, backgroundColor: "#323232" }}
             theme={{ colors: { onSurfaceVariant: "#fff" } }}
           />
@@ -161,51 +152,55 @@ export default function AdicionaTarefa() {
               setDescricao(e);
             }}
             textColor="#fff"
-            outlineColor="#fff"
-            activeOutlineColor="#fff"
+            outlineColor="gray"
+            activeOutlineColor="gray"
             style={{ marginHorizontal: 10, backgroundColor: "#323232" }}
             theme={{ colors: { onSurfaceVariant: "#fff" } }}
           />
 
-          <TouchableOpacity onPress={() => setShowData(true)}>
-            <TextInput
-              label="Data"
-              mode="outlined"
-              disabled
-              value={data || ""}
-              disabledTextColor="white"
-              textColor="#fff"
-              outlineColor="#fff"
-              activeOutlineColor="#fff"
-              style={{ marginHorizontal: 10, backgroundColor: "#323232" }}
-              theme={{ colors: { onSurfaceVariant: "#fff" } }}
-            />
-          </TouchableOpacity>
+          <BouncyCheckboxGroup
+            style={{alignContent:'center', justifyContent:'center', marginVertical:10}}
+            data={checkboxData}
+            initial={1}
+            onChange={(selectedItem) => {
+              setRepeticao(selectedItem.label);
+              console.log(JSON.stringify(selectedItem.label));
+            }}
+          />
 
-          {showData && (
-            <DateTimePickerModal
-              isVisible={showData}
-              mode="date"
-              is24Hour={true}
-              onConfirm={handleDateConfirm}
-              onCancel={(e) => setShowData(false)}
-            />
+          {repeticao === "unico" && (
+            <>
+              <TouchableOpacity onPress={() => setShowData(true)}>
+                <TextInput
+                  label="Data"
+                  mode="outlined"
+                  disabled
+                  value={data || ""}
+                  disabledTextColor="white"
+                  textColor="#fff"
+                  outlineColor="#fff"
+                  activeOutlineColor="#fff"
+                  style={{ marginHorizontal: 10, backgroundColor: "#323232" }}
+                  theme={{ colors: { onSurfaceVariant: "#fff" } }}
+                />
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => setShowHora(true)}>
+                <TextInput
+                  label="Hora"
+                  mode="outlined"
+                  disabled
+                  value={hora || ""}
+                  disabledTextColor="white"
+                  textColor="#fff"
+                  outlineColor="#fff"
+                  activeOutlineColor="#fff"
+                  style={{ marginHorizontal: 10, backgroundColor: "#323232" }}
+                  theme={{ colors: { onSurfaceVariant: "#fff" } }}
+                />
+              </TouchableOpacity>
+            </>
           )}
-
-          <TouchableOpacity onPress={() => setShowHora(true)}>
-            <TextInput
-              label="Hora"
-              mode="outlined"
-              disabled
-              value={hora || ""}
-              disabledTextColor="white"
-              textColor="#fff"
-              outlineColor="#fff"
-              activeOutlineColor="#fff"
-              style={{ marginHorizontal: 10, backgroundColor: "#323232" }}
-              theme={{ colors: { onSurfaceVariant: "#fff" } }}
-            />
-          </TouchableOpacity>
 
           {showHora && (
             <DateTimePickerModal
@@ -217,6 +212,16 @@ export default function AdicionaTarefa() {
             />
           )}
 
+          {showData && (
+            <DateTimePickerModal
+              isVisible={showData}
+              mode="date"
+              is24Hour={true}
+              onConfirm={handleDateConfirm}
+              onCancel={(e) => setShowData(false)}
+            />
+          )}
+          
           <View
             style={{
               flexDirection: "row",
