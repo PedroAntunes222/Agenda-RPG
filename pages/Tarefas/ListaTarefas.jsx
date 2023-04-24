@@ -79,6 +79,7 @@ export default function ListaTarefas({ navigation }) {
                     },
                   });
                   setLoading(true);
+                // delTarefa(tarefa.id);
                 }}
               >
                 <View style={style.cardInfos}>

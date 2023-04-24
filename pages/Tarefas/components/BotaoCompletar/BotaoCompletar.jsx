@@ -1,12 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
-import { LoadingContext } from "../../../../context/loading";
-import { Text, View, StyleSheet } from "react-native";
+import React from "react";
 import { FAB } from "react-native-paper";
 import { completaTarefa } from "../../../../Database/tarefasDatabase";
-import {
-  uparAtributo,
-  getAtributo,
-} from "../../../../Database/atributosDatabase";
+import { uparAtributo } from "../../../../Database/atributosDatabase";
 import Tarefa from "../../../../class/tarefa";
 import Atributo from "../../../../class/atributo";
 import moment from "moment";
@@ -19,11 +14,28 @@ export default function BotaoCompletar({
   atributoID,
   atributo,
 }) {
-  const completar = async () => {
-    // await getAtributo(atributoID, (atributo) => {
-    //   setAtributo(atributo);
-    // });
+  const sobeNivel = async (xp) => {
+    let xpGanho = xp;
+    const NivelAtual = atributo[0].nivel;
+    const XpAtual = atributo[0].xp;
 
+    let novoNivel = NivelAtual;
+
+    const somaXp = XpAtual + xpGanho;
+
+    if (somaXp >= 10) {
+      xpGanho = somaXp - 10;
+      novoNivel++;
+    } else {
+      xpGanho = somaXp;
+    }
+
+    const upAtributo = new Atributo(atributoID, "", "", novoNivel, xpGanho);
+
+    await uparAtributo(upAtributo);
+  };
+
+  const completar = async () => {
     let status = "";
     let proximaData = "";
     let xpGanho = 0;
@@ -66,24 +78,6 @@ export default function BotaoCompletar({
       }
     }
 
-    const NivelAtual = atributo[0].nivel;
-    const XpAtual = atributo[0].xp;
-
-    let novoNivel = NivelAtual;
-
-    const somaXp = XpAtual + xpGanho;
-
-    if (somaXp >= 10) {
-      xpGanho = somaXp - 10;
-      novoNivel++;
-    } else {
-      xpGanho = somaXp;
-    }
-
-    const upAtributo = new Atributo(atributoID, "", "", novoNivel, xpGanho);
-
-    uparAtributo(upAtributo);
-
     const novaData = moment()
       .tz("America/Sao_Paulo")
       .add(1, proximaData)
@@ -103,8 +97,9 @@ export default function BotaoCompletar({
       []
     );
 
-    // console.log(proximaTarefa)
+    sobeNivel(xpGanho);
     completaTarefa(proximaTarefa);
+    // console.log(proximaTarefa);
   };
 
   return (
