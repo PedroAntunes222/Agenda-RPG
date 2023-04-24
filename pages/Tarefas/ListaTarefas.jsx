@@ -10,7 +10,7 @@ import {
   Dimensions,
 } from "react-native";
 import * as SQLite from "expo-sqlite";
-import { initDB } from "../../Database/sqsliteDatabase";
+import { getEquipamento } from "../../Database/inventarioDatabase";
 import { getTarefas, delTarefa } from "../../Database/tarefasDatabase";
 import DataTarefa from "./components/DataTarefa/DataTarefa";
 import Tarefa from "../../class/tarefa";
@@ -18,6 +18,7 @@ import Tarefa from "../../class/tarefa";
 export default function ListaTarefas({ navigation }) {
   const [db, setDb] = useState(SQLite.openDatabase("agenda.db"));
   const [tarefas, setTarefas] = useState();
+  const [equipamento, setEquipamento] = useState();
 
   const { loading, setLoading } = useContext(LoadingContext);
 
@@ -27,8 +28,9 @@ export default function ListaTarefas({ navigation }) {
   };
 
   useEffect(() => {
-    initDB();
+    // initDB();
     getTarefas(handleTarefas);
+    getEquipamento(setEquipamento)
     setLoading(false);
   }, [db]);
 
@@ -42,7 +44,7 @@ export default function ListaTarefas({ navigation }) {
   }, [navigation]);
 
   const windowHeight = Dimensions.get("window").height;
-
+console.log(equipamento)
   return (
     tarefas !== undefined && (
       <SafeAreaView

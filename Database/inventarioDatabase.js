@@ -1,0 +1,77 @@
+import * as SQLite from "expo-sqlite";
+const db = SQLite.openDatabase("agenda.db");
+
+export const addInventario = (item) => {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "INSERT INTO Inventario(Item, quantidade) VALUES (?)",
+      [item.nome, item.descricao, item.raridade, item.tipo, item.equipamento],
+      (txObj, resultSet) => {
+        console.log(resultSet);
+      },
+      (txObj, error) => console.log(error)
+    );
+  });
+  console.log("add feito");
+};
+
+export const getInventario = (callback) => {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "SELECT * FROM Inventario",
+      null,
+      (txObj, resultSet) => callback(resultSet.rows._array),
+      (txObj, error) => console.log(error)
+    );
+  });
+};
+
+export const putInventario = (item) => {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "UPDATE Inventario SET Item=?, quantidade=?, WHERE id=?",
+      [item.nome, item.descricao, item.raridade, item.tipo, item.equipamento],
+      (txObj, resultSet) => {
+        console.log(resultSet);
+      },
+      (txObj, error) => console.log(error)
+    );
+  });
+};
+
+export const delInventario = (id) => {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "DELETE FROM Inventario WHERE id=?",
+      [id],
+      (txObj, resultSet) => {
+        console.log(resultSet);
+      },
+      (txObj, error) => console.log(error)
+    );
+  });
+};
+
+export const getEquipamento = (callback) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM Equipamento",
+        null,
+        (txObj, resultSet) => callback(resultSet.rows._array),
+        (txObj, error) => console.log(error)
+      );
+    });
+  };
+
+export const putEquipamento = (itemID, parte) => {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "UPDATE Equipamento SET Item=? WHERE Parte=?",
+      [itemID, parte],
+      (txObj, resultSet) => {
+        console.log(resultSet);
+      },
+      (txObj, error) => console.log(error)
+    );
+  });
+};

@@ -1,5 +1,16 @@
-import * as SQLite from 'expo-sqlite';
-const db = SQLite.openDatabase('agenda.db');
+import * as SQLite from "expo-sqlite";
+const db = SQLite.openDatabase("agenda.db");
+
+const equipamentos = [
+  { parte: "Cabeca", item: "" },
+  { parte: "Torso", item: "" },
+  { parte: "Pernas", item: "" },
+  { parte: "Maos", item: "" },
+  { parte: "Pes", item: "" },
+  { parte: "Acessorio_1", item: "" },
+  { parte: "Acessorio_2", item: "" },
+  { parte: "Acessorio_3", item: "" },
+];
 
 export const initDB = () => {
   db.transaction((tx) => {
@@ -54,6 +65,23 @@ export const initDB = () => {
       )`
     );
     tx.executeSql(
+      `CREATE TABLE IF NOT EXISTS Equipamento(
+        Parte TEXT PRIMARY KEY NOT NULL,
+        Item INTEGER,
+        FOREIGN KEY (Item) REFERENCES Itens(id)
+      )`
+    );
+    tx.executeSql(`SELECT * FROM Equipamento`, [], (_, { rows }) => {
+      if (rows.length === 0) {
+        equipamentos.forEach((equipamento) => {
+          tx.executeSql(
+            `INSERT INTO Equipamento(Parte) VALUES(?)`,
+            [equipamento.parte]
+          );
+        });
+      }
+    });
+    tx.executeSql(
       `CREATE TABLE IF NOT EXISTS Recompensa_Item( 
         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
         id_Tarefa INTEGER,
@@ -82,5 +110,5 @@ export const initDB = () => {
       )`
     );
   });
-  console.log('banco criado');
+  console.log("banco criado");
 };
