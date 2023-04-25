@@ -99,7 +99,6 @@ export default function BotaoCompletar({
 
     sobeNivel(xpGanho);
     completaTarefa(proximaTarefa);
-    // console.log(proximaTarefa);
   };
 
   return (

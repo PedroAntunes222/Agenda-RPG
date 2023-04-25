@@ -3,19 +3,11 @@ import { LoadingContext } from "../../context/loading";
 import {
   Text,
   View,
-  StyleSheet,
-  SafeAreaView,
-  TouchableOpacity,
-  ScrollView,
-  Button,
+  StyleSheet
 } from "react-native";
 import * as SQLite from "expo-sqlite";
-import { getTarefa, completaTarefa } from "../../Database/tarefasDatabase";
-import { uparAtributo, getAtributo } from "../../Database/atributosDatabase";
-import Tarefa from "../../class/tarefa";
+import { getTarefa } from "../../Database/tarefasDatabase";
 import Atributo from "../../class/atributo";
-import { FAB } from "react-native-paper";
-import moment from "moment";
 import "moment-timezone";
 import BotaoCompletar from "./components/BotaoCompletar/BotaoCompletar";
 
@@ -34,11 +26,14 @@ export default function ViewTarefa({ navigation, route }) {
 
   useEffect(()=>{
     if(tarefa!==undefined){
-      const montaAtributo = {
-        id: tarefa[0].atributo_id,
-        nivel: tarefa[0].atributo_nivel,
-        xp: tarefa[0].atributo_xp,
-      };
+      const montaAtributo = new Atributo(
+        tarefa[0].atributo_id,
+        '',
+        '',
+        tarefa[0].atributo_nivel,
+        tarefa[0].atributo_xp,
+      );
+      // console.log(montaAtributo)
       setAtributo(montaAtributo);
     }
   }, [tarefa]);
@@ -94,7 +89,6 @@ export default function ViewTarefa({ navigation, route }) {
           id={tarefa[0].id}
           data={tarefa[0].data}
           repeticao={tarefa[0].repeticao}
-          // atributoID={tarefa[0].atributo_id}
           atributo={atributo}
         />
       </View>
