@@ -135,7 +135,7 @@ const style = StyleSheet.create({
     flexDirection: "row",
     gap: 10,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
   },
   cardAtributo: {
     width: 20,
