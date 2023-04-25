@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import TarefasRotas from "../pages/Tarefas/TarefasRotas";
 import Personagem from "../pages/Personagem/Personagem";
+import Inventario from "../pages/Inventario/Inventario";
 
 export default function BottomMenu() {
   const Tab = createBottomTabNavigator();
@@ -34,6 +35,9 @@ export default function BottomMenu() {
           }}
         />
         <Tab.Screen name="Personagem" component={Personagem} />
+
+        <Tab.Screen name="Inventario" component={Inventario} />
+
       </Tab.Navigator>
     </NavigationContainer>
   );

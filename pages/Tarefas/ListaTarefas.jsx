@@ -44,7 +44,7 @@ export default function ListaTarefas({ navigation }) {
   }, [navigation]);
 
   const windowHeight = Dimensions.get("window").height;
-console.log(equipamento)
+  
   return (
     tarefas !== undefined && (
       <SafeAreaView
