@@ -25,21 +25,23 @@ export default function ViewTarefa({ navigation, route }) {
   const [atributo, setAtributo] = useState();
 
   const { loading, setLoading } = useContext(LoadingContext);
-  const [data, setData] = useState();
-  // const [atributoID, setAtributoID] = useState();
-
-  const handleAtributo = async (atributoID) => {
-    await getAtributo(atributoID, (atributo) => {
-      setAtributo(atributo);
-    });
-  };
 
   const handleTarefa = async () => {
     await getTarefa(route.params.id, (tarefa) => {
       setTarefa(tarefa);
-      handleAtributo(tarefa[0].atributo_id);
     });
   };
+
+  useEffect(()=>{
+    if(tarefa!==undefined){
+      const montaAtributo = {
+        id: tarefa[0].atributo_id,
+        nivel: tarefa[0].atributo_nivel,
+        xp: tarefa[0].atributo_xp,
+      };
+      setAtributo(montaAtributo);
+    }
+  }, [tarefa]);
 
   useEffect(() => {
     handleTarefa();
@@ -92,7 +94,7 @@ export default function ViewTarefa({ navigation, route }) {
           id={tarefa[0].id}
           data={tarefa[0].data}
           repeticao={tarefa[0].repeticao}
-          atributoID={tarefa[0].atributo_id}
+          // atributoID={tarefa[0].atributo_id}
           atributo={atributo}
         />
       </View>

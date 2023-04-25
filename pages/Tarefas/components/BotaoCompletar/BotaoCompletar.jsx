@@ -11,13 +11,13 @@ export default function BotaoCompletar({
   id,
   data,
   repeticao,
-  atributoID,
   atributo,
 }) {
+  console.log(atributo)
   const sobeNivel = async (xp) => {
     let xpGanho = xp;
-    const NivelAtual = atributo[0].nivel;
-    const XpAtual = atributo[0].xp;
+    const NivelAtual = atributo.nivel;
+    const XpAtual = atributo.xp;
 
     let novoNivel = NivelAtual;
 
@@ -30,7 +30,7 @@ export default function BotaoCompletar({
       xpGanho = somaXp;
     }
 
-    const upAtributo = new Atributo(atributoID, "", "", novoNivel, xpGanho);
+    const upAtributo = new Atributo(atributo.id, "", "", novoNivel, xpGanho);
 
     await uparAtributo(upAtributo);
   };

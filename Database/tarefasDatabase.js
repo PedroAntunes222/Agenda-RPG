@@ -66,9 +66,9 @@ export const getTarefa = (id, callback) => {
   db.transaction((tx) => {
     tx.executeSql(
       `SELECT Tarefas.*, 
-      Atributos.nome AS atributo_nome, Atributos.cor AS atributo_cor, Atributos.id AS atributo_id,
-      Itens.nome AS item_nome,
-      Magias.nome AS magia_nome
+      Atributos.id AS atributo_id, Atributos.nome AS atributo_nome, Atributos.cor AS atributo_cor, Atributos.xp AS atributo_xp, Atributos.nivel AS atributo_nivel,
+      Itens.id AS item_id, Itens.nome AS item_nome,
+      Magias.id AS magia_id, Magias.nome AS magia_nome
       FROM Tarefas
       LEFT JOIN Tarefas_Atributos ON Tarefas.id = Tarefas_Atributos.id_Tarefa 
       LEFT JOIN Atributos ON Tarefas_Atributos.id_Atributo = Atributos.id 
