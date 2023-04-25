@@ -1,11 +1,11 @@
 import * as SQLite from "expo-sqlite";
 const db = SQLite.openDatabase("agenda.db");
 
-export const addInventario = (item) => {
+export const addInventario = (itemId, quantidade) => {
   db.transaction((tx) => {
     tx.executeSql(
-      "INSERT INTO Inventario(Item, quantidade) VALUES (?)",
-      [item.nome, item.descricao, item.raridade, item.tipo, item.equipamento],
+      "INSERT INTO Inventario(Item, quantidade) VALUES (?, ?)",
+      [itemId, quantidade],
       (txObj, resultSet) => {
         console.log(resultSet);
       },
@@ -18,7 +18,9 @@ export const addInventario = (item) => {
 export const getInventario = (callback) => {
   db.transaction((tx) => {
     tx.executeSql(
-      "SELECT * FROM Inventario",
+      `SELECT * FROM Inventario
+      LEFT JOIN Itens ON Inventario.item_id = Itens.id
+      `,
       null,
       (txObj, resultSet) => callback(resultSet.rows._array),
       (txObj, error) => console.log(error)
@@ -26,11 +28,11 @@ export const getInventario = (callback) => {
   });
 };
 
-export const putInventario = (item) => {
+export const putInventario = (itemId, quantidade) => {
   db.transaction((tx) => {
     tx.executeSql(
-      "UPDATE Inventario SET Item=?, quantidade=?, WHERE id=?",
-      [item.nome, item.descricao, item.raridade, item.tipo, item.equipamento],
+      "UPDATE Inventario SET quantidade=?, WHERE id=?",
+      [quantidade, itemId],
       (txObj, resultSet) => {
         console.log(resultSet);
       },
@@ -53,15 +55,15 @@ export const delInventario = (id) => {
 };
 
 export const getEquipamento = (callback) => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        "SELECT * FROM Equipamento",
-        null,
-        (txObj, resultSet) => callback(resultSet.rows._array),
-        (txObj, error) => console.log(error)
-      );
-    });
-  };
+  db.transaction((tx) => {
+    tx.executeSql(
+      "SELECT * FROM Equipamento",
+      null,
+      (txObj, resultSet) => callback(resultSet.rows._array),
+      (txObj, error) => console.log(error)
+    );
+  });
+};
 
 export const putEquipamento = (itemID, parte) => {
   db.transaction((tx) => {

@@ -90,6 +90,7 @@ export default function ViewTarefa({ navigation, route }) {
           data={tarefa[0].data}
           repeticao={tarefa[0].repeticao}
           atributo={atributo}
+          item={tarefa[0].item_id}
         />
       </View>
     )

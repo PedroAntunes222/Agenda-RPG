@@ -59,7 +59,7 @@ export const initDB = () => {
     tx.executeSql(
       `CREATE TABLE IF NOT EXISTS Inventario( 
         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-        Item INTEGER,
+        item_id INTEGER,
         quantidade INTEGER,
         FOREIGN KEY (Item) REFERENCES Itens(id)
       )`

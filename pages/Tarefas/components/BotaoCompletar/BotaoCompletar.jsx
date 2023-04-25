@@ -2,18 +2,14 @@ import React from "react";
 import { FAB } from "react-native-paper";
 import { completaTarefa } from "../../../../Database/tarefasDatabase";
 import { uparAtributo } from "../../../../Database/atributosDatabase";
+import { addInventario } from "../../../../Database/inventarioDatabase";
 import Tarefa from "../../../../class/tarefa";
 import Atributo from "../../../../class/atributo";
 import moment from "moment";
 import "moment-timezone";
 
-export default function BotaoCompletar({
-  id,
-  data,
-  repeticao,
-  atributo,
-}) {
-  console.log(atributo)
+export default function BotaoCompletar({ id, data, repeticao, atributo, item }) {
+
   const sobeNivel = async (xp) => {
     let xpGanho = xp;
     const NivelAtual = atributo.nivel;
@@ -34,6 +30,11 @@ export default function BotaoCompletar({
 
     await uparAtributo(upAtributo);
   };
+
+  const addToInvetory = async () => {
+    // console.log(item);
+    addInventario(item, 1);
+  }
 
   const completar = async () => {
     let status = "";
@@ -98,6 +99,7 @@ export default function BotaoCompletar({
     );
 
     sobeNivel(xpGanho);
+    addToInvetory();
     completaTarefa(proximaTarefa);
   };
 

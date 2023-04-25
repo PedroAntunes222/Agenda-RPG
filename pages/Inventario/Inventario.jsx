@@ -25,14 +25,14 @@ export default function Inventario({ navigation }) {
 
   useEffect(() => {
     // setLoading(true);
-    getItens(handleInventario);
+    getInventario(handleInventario);
   }, [db]);
 
   useEffect(() => {
     // atualiza lista ao voltar
     navigation.addListener("focus", () => {
       setLoading(true);
-      getItens(handleInventario);
+      getInventario(handleInventario);
       setLoading(false);
     });
   }, [navigation]);
