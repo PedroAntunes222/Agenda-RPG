@@ -9,16 +9,33 @@ import {
   ScrollView,
   Dimensions,
 } from "react-native";
+import * as SQLite from "expo-sqlite";
+import { getInventario } from "../../Database/inventarioDatabase";
+import { getItens } from "../../Database/ItemDatabase";
 
-
-export default function Inventario() {
-
-
+export default function Inventario({ navigation }) {
+  const [db, setDb] = useState(SQLite.openDatabase("agenda.db"));
   const { loading, setLoading } = useContext(LoadingContext);
+  const [inventario, setInventario] = useState([]);
 
-  useEffect(()=>{
+  handleInventario = (itens) => {
+    setInventario(itens);
+    console.log(inventario);
+  };
+
+  useEffect(() => {
     // setLoading(true);
-  },[]);
+    getItens(handleInventario);
+  }, [db]);
+
+  useEffect(() => {
+    // atualiza lista ao voltar
+    navigation.addListener("focus", () => {
+      setLoading(true);
+      getItens(handleInventario);
+      setLoading(false);
+    });
+  }, [navigation]);
 
   const windowHeight = Dimensions.get("window").height;
 

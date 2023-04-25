@@ -18,7 +18,6 @@ export default function Equipamento({navigation}) {
   const [itens, setItens] = useState([]);
   const {loading, setLoading} = useContext(LoadingContext);
 
-
   const handleItens = (atributos) => {
     setItens(atributos);
   };
