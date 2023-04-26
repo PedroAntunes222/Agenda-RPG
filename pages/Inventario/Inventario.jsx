@@ -16,7 +16,7 @@ import { getItens } from "../../Database/ItemDatabase";
 export default function Inventario({ navigation }) {
   const [db, setDb] = useState(SQLite.openDatabase("agenda.db"));
   const { loading, setLoading } = useContext(LoadingContext);
-  const [inventario, setInventario] = useState([]);
+  const [inventario, setInventario] = useState();
 
   handleInventario = (itens) => {
     setInventario(itens);
@@ -40,10 +40,21 @@ export default function Inventario({ navigation }) {
   const windowHeight = Dimensions.get("window").height;
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#1E1E1E", height: windowHeight }}>
-      <ScrollView>
-        <Text>Inventario</Text>
-      </ScrollView>
-    </SafeAreaView>
+    inventario !== undefined && (
+      <SafeAreaView
+        style={{ backgroundColor: "#1E1E1E", height: windowHeight }}
+      >
+        <ScrollView>
+          {inventario.map((item, index) => (
+            <View key={index}>
+              <Text>{item.nome}</Text>
+              <Text>{item.descricao}</Text>
+              <Text>{item.quantidade}</Text>
+              <Text>{item.equipamento}</Text>
+            </View>
+          ))}
+        </ScrollView>
+      </SafeAreaView>
+    )
   );
 }
