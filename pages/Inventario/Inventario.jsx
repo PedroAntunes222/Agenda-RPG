@@ -18,21 +18,16 @@ export default function Inventario({ navigation }) {
   const { loading, setLoading } = useContext(LoadingContext);
   const [inventario, setInventario] = useState();
 
-  handleInventario = (itens) => {
-    setInventario(itens);
-    console.log(inventario);
-  };
-
   useEffect(() => {
     // setLoading(true);
-    getInventario(handleInventario);
+    getInventario(setInventario);
   }, [db]);
 
   useEffect(() => {
     // atualiza lista ao voltar
     navigation.addListener("focus", () => {
       setLoading(true);
-      getInventario(handleInventario);
+      getInventario(setInventario);
       setLoading(false);
     });
   }, [navigation]);
@@ -46,7 +41,20 @@ export default function Inventario({ navigation }) {
       >
         <ScrollView>
           {inventario.map((item, index) => (
-            <TouchableOpacity key={index} onPress={()=>navigation.navigate("Inventario")}>
+            <TouchableOpacity
+              key={index}
+              onPress={(e) => {
+                navigation.navigate({
+                  name: "ViewItem",
+                  params: {
+                    title: item.nome,
+                    id: item.id,
+                  },
+                });
+                setLoading(true);
+                // delTarefa(tarefa.id);
+              }}
+            >
               <View>
                 <Text>{item.nome}</Text>
                 <Text>{item.descricao}</Text>
