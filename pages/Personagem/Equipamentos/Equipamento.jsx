@@ -9,34 +9,31 @@ import {
   TouchableOpacity,
 } from "react-native";
 import * as SQLite from "expo-sqlite";
+import { getEquipamento } from "../../../Database/inventarioDatabase";
 import { getItens, addItem } from "../../../Database/ItemDatabase";
 import Item from "../../../class/item";
 import { LoadingContext } from "../../../context/loading";
 
 export default function Equipamento({navigation}) {
   const [db, setDb] = useState(SQLite.openDatabase("agenda.db"));
-  const [itens, setItens] = useState([]);
+  const [itens, setItens] = useState();
+  const [equipamento, setEquipamento] = useState();
   const {loading, setLoading} = useContext(LoadingContext);
 
-  const handleItens = (atributos) => {
-    setItens(atributos);
-  };
-
   useEffect(() => {
-    getItens(handleItens);
+    getItens(setItens);
+    getEquipamento(setEquipamento);
+    setLoading(false);
   }, [db]);
   
   useEffect(() => {
     // atualiza lista ao voltar
     navigation.addListener("focus", () => {
-        getItens(handleItens);
+        getItens(setItens);
+        setLoading(false);
     });
   }, [navigation]);
 
-  useEffect(() => {
-    setLoading(false);
-    // console.log(itens);
-  }, [itens]);
 
   const adicionaItem = () => {
     let novoItem = new Item(
@@ -47,10 +44,11 @@ export default function Equipamento({navigation}) {
         'arma',
         ''
     );
-    addItem(novoItem);
+    addItem(novoItem)
   };
 
   return (
+    itens!==undefined &&
     <View>
       {itens.map((item, index) => (
         <View key={index}>
