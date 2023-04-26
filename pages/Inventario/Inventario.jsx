@@ -46,12 +46,14 @@ export default function Inventario({ navigation }) {
       >
         <ScrollView>
           {inventario.map((item, index) => (
-            <View key={index}>
-              <Text>{item.nome}</Text>
-              <Text>{item.descricao}</Text>
-              <Text>{item.quantidade}</Text>
-              <Text>{item.equipamento}</Text>
-            </View>
+            <TouchableOpacity key={index} onPress={()=>navigation.navigate("Inventario")}>
+              <View>
+                <Text>{item.nome}</Text>
+                <Text>{item.descricao}</Text>
+                <Text>{item.quantidade}</Text>
+                <Text>{item.equipamento}</Text>
+              </View>
+            </TouchableOpacity>
           ))}
         </ScrollView>
       </SafeAreaView>
