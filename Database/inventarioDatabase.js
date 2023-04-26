@@ -4,7 +4,7 @@ const db = SQLite.openDatabase("agenda.db");
 export const addInventario = (itemId, quantidade) => {
   db.transaction((tx) => {
     tx.executeSql(
-      "INSERT INTO Inventario(Item, quantidade) VALUES (?, ?)",
+      "INSERT INTO Inventario(Item_id, quantidade) VALUES (?, ?)",
       [itemId, quantidade],
       (txObj, resultSet) => {
         console.log(resultSet);

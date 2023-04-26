@@ -15,7 +15,7 @@ const equipamentos = [
 export const initDB = () => {
   db.transaction((tx) => {
     tx.executeSql(
-      `CREATE TABLE IF NOT EXISTS Tarefas(
+      `CREATE TABLE Tarefas(
         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
         xp INTEGER,
         titulo TEXT,
@@ -59,16 +59,16 @@ export const initDB = () => {
     tx.executeSql(
       `CREATE TABLE IF NOT EXISTS Inventario( 
         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-        item_id INTEGER,
+        Item_id INTEGER,
         quantidade INTEGER,
-        FOREIGN KEY (Item) REFERENCES Itens(id)
+        FOREIGN KEY (Item_id) REFERENCES Itens(id)
       )`
     );
     tx.executeSql(
       `CREATE TABLE IF NOT EXISTS Equipamento(
         Parte TEXT PRIMARY KEY NOT NULL,
-        Item INTEGER,
-        FOREIGN KEY (Item) REFERENCES Itens(id)
+        Item_id INTEGER,
+        FOREIGN KEY (Item_id) REFERENCES Itens(id)
       )`
     );
     tx.executeSql(`SELECT * FROM Equipamento`, [], (_, { rows }) => {
