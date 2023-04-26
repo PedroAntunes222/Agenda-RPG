@@ -101,6 +101,13 @@ export const initDB = () => {
       )`
     );
     tx.executeSql(
+      `CREATE TABLE IF NOT EXISTS Grimorio( 
+        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+        Magia_id INTEGER,
+        FOREIGN KEY (Magia_id) REFERENCES Magias(id)
+      )`
+    );
+    tx.executeSql(
       `CREATE TABLE IF NOT EXISTS Recompensa_Magia( 
         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
         id_Tarefa INTEGER,
