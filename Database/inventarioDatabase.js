@@ -4,7 +4,7 @@ const db = SQLite.openDatabase("agenda.db");
 export const addInventario = (itemId, quantidade) => {
   db.transaction((tx) => {
     tx.executeSql(
-      "INSERT INTO Inventario(Item_id, quantidade) VALUES (?, ?)",
+      "INSERT INTO Inventario(item_id, quantidade) VALUES (?, ?)",
       [itemId, quantidade],
       (txObj, resultSet) => {
         console.log(resultSet);
@@ -68,7 +68,7 @@ export const getEquipamento = (callback) => {
 export const putEquipamento = (itemID, parte) => {
   db.transaction((tx) => {
     tx.executeSql(
-      "UPDATE Equipamento SET Item=? WHERE Parte=?",
+      "UPDATE Equipamento SET item_id=? WHERE parte=?",
       [itemID, parte],
       (txObj, resultSet) => {
         console.log(resultSet);

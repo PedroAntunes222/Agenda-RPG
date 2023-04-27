@@ -59,16 +59,16 @@ export const initDB = () => {
     tx.executeSql(
       `CREATE TABLE IF NOT EXISTS Inventario( 
         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-        Item_id INTEGER,
+        item_id INTEGER,
         quantidade INTEGER,
         FOREIGN KEY (Item_id) REFERENCES Itens(id)
       )`
     );
     tx.executeSql(
       `CREATE TABLE IF NOT EXISTS Equipamento(
-        Parte TEXT PRIMARY KEY NOT NULL,
-        Item_id INTEGER,
-        FOREIGN KEY (Item_id) REFERENCES Itens(id)
+        parte TEXT PRIMARY KEY NOT NULL,
+        item_id INTEGER,
+        FOREIGN KEY (item_id) REFERENCES Itens(id)
       )`
     );
     tx.executeSql(`SELECT * FROM Equipamento`, [], (_, { rows }) => {
@@ -103,8 +103,8 @@ export const initDB = () => {
     tx.executeSql(
       `CREATE TABLE IF NOT EXISTS Grimorio( 
         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-        Magia_id INTEGER,
-        FOREIGN KEY (Magia_id) REFERENCES Magias(id)
+        magia_id INTEGER,
+        FOREIGN KEY (magia_id) REFERENCES Magias(id)
       )`
     );
     tx.executeSql(

@@ -40,9 +40,9 @@ export default function Equipamento({ navigation }) {
   };
 
   return (
-    itens !== undefined && (
+    equipamento !== undefined && (
       <View>
-        {itens.map((item, index) => (
+        {equipamento.map((item, index) => (
           <TouchableOpacity
             key={index}
             onPress={() => {
@@ -52,10 +52,8 @@ export default function Equipamento({ navigation }) {
             }}
           >
             <View>
-              <Text>{item.nome}</Text>
-              <Text>{item.descricao}</Text>
-              <Text>{item.raridade}</Text>
-              <Text>{item.tipo}</Text>
+              <Text>{item.parte}</Text>
+              <Text>{item.item_id}</Text>
             </View>
           </TouchableOpacity>
         ))}

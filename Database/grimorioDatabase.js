@@ -4,7 +4,7 @@ const db = SQLite.openDatabase("agenda.db");
 export const addGrimorio = (MagiaId) => {
   db.transaction((tx) => {
     tx.executeSql(
-      "INSERT INTO Grimorio(Magia_id) VALUES (?)",
+      "INSERT INTO Grimorio(magia_id) VALUES (?)",
       [MagiaId],
       (txObj, resultSet) => {
         console.log(resultSet);
@@ -19,7 +19,7 @@ export const getGrimorio = (callback) => {
   db.transaction((tx) => {
     tx.executeSql(
       `SELECT * FROM Grimorio
-      LEFT JOIN Magias ON Grimorio.Magia_id = Magias.id
+      LEFT JOIN Magias ON Grimorio.magia_id = Magias.id
       `,
       null,
       (txObj, resultSet) => callback(resultSet.rows._array),
