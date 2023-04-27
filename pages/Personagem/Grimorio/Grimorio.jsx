@@ -11,56 +11,49 @@ import {
 } from "react-native";
 import * as SQLite from "expo-sqlite";
 import { getMagias, addMagia } from "../../../Database/magiaDatabase";
+import { getGrimorio } from "../../../Database/grimorioDatabase";
 import Magia from "../../../class/magia";
 
-export default function Grimorio({navigation}) {
+export default function Grimorio({ navigation }) {
   const [db, setDb] = useState(SQLite.openDatabase("agenda.db"));
-  const {loading, setLoading} = useContext(LoadingContext);
+  const { loading, setLoading } = useContext(LoadingContext);
 
   const [magias, setMagias] = useState([]);
-
-  const handleMagias = (atributos) => {
-    setMagias(atributos);
-  };
+  const [grimorio, setGrimorio] = useState([]);
 
   useEffect(() => {
-    getMagias(handleMagias);
+    getMagias(setMagias);
+    getGrimorio(setGrimorio);
+    setLoading(false);
   }, [db]);
-  
+
   useEffect(() => {
     // atualiza lista ao voltar
     navigation.addListener("focus", () => {
-        getMagias(handleMagias);
+      getMagias(setMagias);
+      getGrimorio(setGrimorio);
+      setLoading(false);
     });
   }, [navigation]);
 
-  useEffect(() => {
-    setLoading(false);
-    // console.log(itens);
-  }, [magias]);
-
   const adicionaMagia = () => {
-    let novaMagia = new Magia(
-        1,
-        'magia',
-        'uma magia',
-        'evocação'
-    );
+    let novaMagia = new Magia(1, "magia", "uma magia", "evocação");
     addMagia(novaMagia);
   };
 
   return (
-    <View>
-      
-      {magias.map((magia, index) => (
-        <View key={index}>
+    grimorio !== undefined && (
+      <View>
+        {grimorio.map((magia, index) => (
+          <View key={index}>
             <Text>{magia.nome}</Text>
             <Text>{magia.descricao}</Text>
             <Text>{magia.tipo}</Text>
-        </View>
-      ))}
+          </View>
+        ))}
 
-      <Button onPress={() => adicionaMagia()} title="addMagia"/>
-    </View>
+        <Button onPress={() => adicionaMagia()} title="addMagia" />
+      </View>
+    )
   );
 }

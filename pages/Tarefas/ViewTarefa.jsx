@@ -91,6 +91,7 @@ export default function ViewTarefa({ navigation, route }) {
           repeticao={tarefa[0].repeticao}
           atributo={atributo}
           item={tarefa[0].item_id}
+          magia={tarefa[0].magia_id}
         />
       </View>
     )

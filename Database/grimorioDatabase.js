@@ -1,11 +1,11 @@
 import * as SQLite from "expo-sqlite";
 const db = SQLite.openDatabase("agenda.db");
 
-export const addGrimorio = (MagiaId, quantidade) => {
+export const addGrimorio = (MagiaId) => {
   db.transaction((tx) => {
     tx.executeSql(
       "INSERT INTO Grimorio(Magia_id) VALUES (?)",
-      [MagiaId, quantidade],
+      [MagiaId],
       (txObj, resultSet) => {
         console.log(resultSet);
       },
