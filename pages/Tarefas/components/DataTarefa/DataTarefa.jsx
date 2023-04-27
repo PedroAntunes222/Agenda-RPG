@@ -62,16 +62,16 @@ export default function DataTarefa({ data, hora }) {
   const mesExtenso = meses[mes - 1].slice(0, 3);
 
   return (
-    <View style={[style.cardData, { backgroundColor: colorData }]}>
-      <Text style={{ color: "white", fontSize: 24 }}>{dia}</Text>
-      <Text style={{ color: "white", fontSize: 20 }}>{mesExtenso}</Text>
+    <View style={style.cardData}>
+      <Text style={{ color: colorData, fontSize: 24 }}>{dia}</Text>
+      <Text style={{ color: colorData, fontSize: 20 }}>{mesExtenso}</Text>
     </View>
   );
 }
 
 const style = StyleSheet.create({
   cardData: {
-    // backgroundColor: "#1e1e1e",
+    backgroundColor: "#1e1e1e",
     borderRadius: 10,
     padding: 5,
     minWidth: 80,
