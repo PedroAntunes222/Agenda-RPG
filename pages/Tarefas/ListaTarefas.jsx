@@ -30,7 +30,7 @@ export default function ListaTarefas({ navigation }) {
   useEffect(() => {
     // initDB();
     getTarefas(handleTarefas);
-    getEquipamento(setEquipamento)
+    getEquipamento(setEquipamento);
     setLoading(false);
   }, [db]);
 
@@ -44,11 +44,11 @@ export default function ListaTarefas({ navigation }) {
   }, [navigation]);
 
   const windowHeight = Dimensions.get("window").height;
-  
+
   return (
     tarefas !== undefined && (
       <SafeAreaView
-        style={{ backgroundColor: "#1E1E1E", height: windowHeight }}
+        style={{ backgroundColor: "#1E1E1E", height: windowHeight, flex: 1}}
       >
         <ScrollView>
           <View style={style.lista}>
@@ -63,8 +63,7 @@ export default function ListaTarefas({ navigation }) {
               }}
             >
               <Text style={{ color: "white", fontSize: 20 }}>
-                {" "}
-                Adicionar Tarefa{" "}
+                Adicionar Tarefa
               </Text>
             </TouchableOpacity>
 
@@ -81,7 +80,7 @@ export default function ListaTarefas({ navigation }) {
                     },
                   });
                   setLoading(true);
-                // delTarefa(tarefa.id);
+                  // delTarefa(tarefa.id);
                 }}
               >
                 <View style={style.cardInfos}>
@@ -103,7 +102,11 @@ export default function ListaTarefas({ navigation }) {
                   </View>
                 </View>
 
-                <DataTarefa data={tarefa.data} hora={tarefa.hora} />
+                <DataTarefa
+                  repeticao={tarefa.repeticao}
+                  data={tarefa.data}
+                  hora={tarefa.hora}
+                />
               </TouchableOpacity>
             ))}
           </View>

@@ -3,14 +3,44 @@ import { Text, View, StyleSheet } from "react-native";
 import moment from "moment";
 import "moment-timezone";
 
-const momentFormater = (dataHora, formato) => {
-  const dataFormatada = moment(dataHora, formato).format(formato);
-  return dataFormatada;
-};
+export default function DataTarefa({ repeticao, data, hora }) {
+  const momentFormater = (dataHora, formato) => {
+    const dataFormatada = moment(dataHora, formato).format(formato);
+    return dataFormatada;
+  };
 
-export default function DataTarefa({ data, hora }) {
-  let colorData;
+  const getColorData = () => {
+    const isSame = () => {
+      return moment(dataAtualFormat, "DD/MM/YYYY").isSame(
+        moment(dataRecebidaFormat, "DD/MM/YYYY")
+      );
+    };
+    const isBefore = () => {
+      return moment(dataAtualFormat, "DD/MM/YYYY").isBefore(
+        moment(dataRecebidaFormat, "DD/MM/YYYY")
+      );
+    };
 
+    let colorData;
+    if (isSame()) {
+      // console.log("o dia é hoje");
+      colorData = "green";
+
+      if (horaAtualFormat > horaRecebidaFormat) {
+        // console.log("a hora ja passou");
+        colorData = "orange";
+      }
+    } else if (isBefore()) {
+      // console.log("o dia ainda n chegou");
+      colorData = "#134896";
+    } else {
+      // console.log("o dia já passou");
+      colorData = "#990e1f";
+    }
+    return colorData;
+  };
+
+  
   const dataRecebidaFormat = momentFormater(data, "DD/MM/YYYY");
 
   const dataAtualFormat = momentFormater(
@@ -25,21 +55,15 @@ export default function DataTarefa({ data, hora }) {
     "HH:mm"
   );
 
-  if (dataAtualFormat === dataRecebidaFormat) {
-    // console.log("o dia é hoje");
-    colorData = "green";
+  
+  const colorData = getColorData();
 
-    if (horaAtualFormat > horaRecebidaFormat) {
-      // console.log("a hora ja passou");
-      colorData = "orange";
-    }
-  } else if (dataAtualFormat < dataRecebidaFormat) {
-    // console.log("o dia ainda n chegou");
-    colorData = "#134896";
-  } else {
-    // console.log("o dia já passou");
-    colorData = "#990e1f";
-  }
+  // const montaIcone = (repeticao) => {
+  //    let este = repeticao.slice(0,1)
+  //    console.log(este)
+  // }
+
+  // const iconeRepeticao = montaIcone();
 
   const meses = [
     "Janeiro",
@@ -61,10 +85,14 @@ export default function DataTarefa({ data, hora }) {
   const mes = momentFormater(dataRecebida, "MM");
   const mesExtenso = meses[mes - 1].slice(0, 3);
 
-  return (
+  return repeticao === "unico" ? (
     <View style={style.cardData}>
       <Text style={{ color: colorData, fontSize: 24 }}>{dia}</Text>
       <Text style={{ color: colorData, fontSize: 20 }}>{mesExtenso}</Text>
+    </View>
+  ) : (
+    <View style={style.cardData}>
+      <Text style={{ color: colorData, fontSize: 24 }}>{repeticao}</Text>
     </View>
   );
 }
