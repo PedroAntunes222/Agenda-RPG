@@ -16,42 +16,48 @@ export const addTarefa = (tarefa) => {
       ],
       (_, { insertId }) => {
         const idTarefa = insertId;
-        tx.executeSql(
-          `INSERT INTO Tarefas_Atributos(id_Tarefa, id_Atributo)
-           VALUES (?, ?)`,
-          [idTarefa, tarefa.atributo],
-          () => {
-            console.log("Tarefa e referência inseridas com sucesso");
-          },
-          (tx, error) => {
-            console.log("Erro ao inserir referência:", error);
-            return false;
-          }
-        );
-        tx.executeSql(
-          `INSERT INTO Recompensa_Item(id_Tarefa, id_Item)
-           VALUES (?, ?)`,
-          [idTarefa, tarefa.item],
-          () => {
-            console.log("Tarefa e Item inseridos com sucesso");
-          },
-          (tx, error) => {
-            console.log("Erro ao inserir referência:", error);
-            return false;
-          }
-        );
-        tx.executeSql(
-          `INSERT INTO Recompensa_Magia(id_Tarefa, id_Magia)
-           VALUES (?, ?)`,
-          [idTarefa, tarefa.magia],
-          () => {
-            console.log("Tarefa e Magia inseridos com sucesso");
-          },
-          (tx, error) => {
-            console.log("Erro ao inserir referência:", error);
-            return false;
-          }
-        );
+        if (tarefa.atributo) {
+          tx.executeSql(
+            `INSERT INTO Tarefas_Atributos(id_Tarefa, id_Atributo)
+             VALUES (?, ?)`,
+            [idTarefa, tarefa.atributo],
+            () => {
+              console.log("Referência inserida com sucesso");
+            },
+            (tx, error) => {
+              console.log("Erro ao inserir referência:", error);
+              return false;
+            }
+          );
+        }
+        if (tarefa.item) {
+          tx.executeSql(
+            `INSERT INTO Recompensa_Item(id_Tarefa, id_Item)
+             VALUES (?, ?)`,
+            [idTarefa, tarefa.item],
+            () => {
+              console.log("Referência inserida com sucesso");
+            },
+            (tx, error) => {
+              console.log("Erro ao inserir referência:", error);
+              return false;
+            }
+          );
+        }
+        if (tarefa.magia) {
+          tx.executeSql(
+            `INSERT INTO Recompensa_Magia(id_Tarefa, id_Magia)
+             VALUES (?, ?)`,
+            [idTarefa, tarefa.magia],
+            () => {
+              console.log("Referência inserida com sucesso");
+            },
+            (tx, error) => {
+              console.log("Erro ao inserir referência:", error);
+              return false;
+            }
+          );
+        }
       },
       (txObj, resultSet) => {
         console.log(resultSet);
@@ -123,11 +129,7 @@ export const completaTarefa = (tarefa) => {
   db.transaction((tx) => {
     tx.executeSql(
       "UPDATE Tarefas SET data=?, status=? WHERE id=?",
-      [
-        tarefa.data,
-        tarefa.status,
-        tarefa.id,
-      ],
+      [tarefa.data, tarefa.status, tarefa.id],
       (txObj, resultSet) => {
         console.log(resultSet);
       },
