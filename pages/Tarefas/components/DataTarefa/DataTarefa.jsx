@@ -40,7 +40,6 @@ export default function DataTarefa({ repeticao, data, hora }) {
     return colorData;
   };
 
-  
   const dataRecebidaFormat = momentFormater(data, "DD/MM/YYYY");
 
   const dataAtualFormat = momentFormater(
@@ -55,15 +54,14 @@ export default function DataTarefa({ repeticao, data, hora }) {
     "HH:mm"
   );
 
-  
   const colorData = getColorData();
 
-  // const montaIcone = (repeticao) => {
-  //    let este = repeticao.slice(0,1)
-  //    console.log(este)
-  // }
+  const montaIcone = () => {
+     const este = repeticao.slice(0,1)
+     return este.toUpperCase()
+  }
 
-  // const iconeRepeticao = montaIcone();
+  const iconeRepeticao = montaIcone();
 
   const meses = [
     "Janeiro",
@@ -92,7 +90,7 @@ export default function DataTarefa({ repeticao, data, hora }) {
     </View>
   ) : (
     <View style={style.cardData}>
-      <Text style={{ color: colorData, fontSize: 24 }}>{repeticao}</Text>
+      <Text style={{ color: colorData, fontSize: 40 }}>{iconeRepeticao}</Text>
     </View>
   );
 }
